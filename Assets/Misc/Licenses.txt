@@ -1,6 +1,6 @@
-Licenses des assets utilisés : 
+### Licenses des assets utilisés : 
 
-Modèles 3D : 
+## Visuel :
 TumbleWeed
 tumbleweed par biggreenorange sur https://sketchfab.com/3d-models/tumbleweed-e9fa341c64fe4626b5d5b0052b0c0b64 (CC Attribution)
 
@@ -12,3 +12,10 @@ Bâtiments
 Western Pack par dqurp sur https://assetstore.unity.com/packages/3d/environments/fantasy/western-pack-3116 (License agreement
 Standard Unity Asset Store EULA - Extension Asset)
 
+Cowboys
+Low Poly Cowboy par MalberS Animations sur https://assetstore.unity.com/packages/3d/characters/humanoids/humans/low-poly-cowboy-49698 (License agreement
+Standard Unity Asset Store EULA - Extension Asset)
+
+Material sol
+Tileable Pack 01 par Mafubash sur https://assetstore.unity.com/packages/2d/textures-materials/floors/tileable-pack-01-49278 (License agreement
+Standard Unity Asset Store EULA - Extension Asset)
