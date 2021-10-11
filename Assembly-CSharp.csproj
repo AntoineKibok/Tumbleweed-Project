@@ -55,8 +55,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\Follower.cs" />
-     <Compile Include="Assets\Scripts\TumbelWeedController.cs" />
+     <Compile Include="Assets\Models\Scripts\Follower.cs" />
+     <Compile Include="Assets\Models\Scripts\TumbelWeedController.cs" />
      <None Include="Assets\Misc\Licenses.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/Jeux/Tumbleweed-Project/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

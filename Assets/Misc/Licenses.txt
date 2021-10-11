@@ -1,8 +1,14 @@
 Licenses des assets utilisés : 
 
-Modèle 3D du TumbleWeed
+Modèles 3D : 
+TumbleWeed
 tumbleweed par biggreenorange sur https://sketchfab.com/3d-models/tumbleweed-e9fa341c64fe4626b5d5b0052b0c0b64 (CC Attribution)
 
-Modèles rochers et cactus
+Rochers et cactus
 POLYDesert par Runemark Studio sur https://assetstore.unity.com/packages/3d/environments/landscapes/polydesert-107196 (License agreement
 Standard Unity Asset Store EULA - Extension Asset)
+
+Bâtiments
+Western Pack par dqurp sur https://assetstore.unity.com/packages/3d/environments/fantasy/western-pack-3116 (License agreement
+Standard Unity Asset Store EULA - Extension Asset)
+
