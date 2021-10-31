@@ -11,11 +11,11 @@ public class Follower : MonoBehaviour
     public float speedDecal = 1;
     public float dist = 5;
     public float height = 2;
+    public GameObject targetObject;
     
     void Update()
     {
         transform.LookAt(target.TransformPoint(lookDecal));
-     
         transform.position = target.position - (target.position - transform.position).normalized * dist;
     }
 }
