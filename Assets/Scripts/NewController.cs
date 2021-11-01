@@ -11,6 +11,7 @@ public class NewController : MonoBehaviour
     private Rigidbody rb;
     public Transform helper;
     private PhysicMaterial physicMaterial;
+    private SphereCollider Scollider;
 
     [Header("Valeurs")]
     public Vector3 direction;
@@ -20,8 +21,9 @@ public class NewController : MonoBehaviour
     private int zSpeed;
     private int xSpeed;
     public int scale = 20;
-    public int ignorePercent = 3;
+    public int ignorePercent = 5;
     private int ignoreSize;
+    public int maxSpeed = 60;
 
     public int speedFactor = 0;
     public float brakeFactor = 0.2f;
@@ -35,7 +37,8 @@ public class NewController : MonoBehaviour
     {
         //Recupération du rigidbody
         rb = gameObject.GetComponent<Rigidbody>();
-        physicMaterial = gameObject.GetComponent<SphereCollider>().material;
+        Scollider = gameObject.GetComponent<SphereCollider>();
+        physicMaterial = Scollider.material;
         //Génère la valeur de la zone a ignorer
         ignoreSize = scale / (ignorePercent);
     }
@@ -61,6 +64,7 @@ public class NewController : MonoBehaviour
         //rb.AddForce(xSpeed/5, 0 ,0);
 
         setSpeed();
+        checkMaxSpeed();
 
     }
 
@@ -99,27 +103,45 @@ public class NewController : MonoBehaviour
     void setSpeed()
     {
         //Si c'est au delà de la zone, le thumble accélère
-        if (Math.Abs(xSpeed) > ignoreSize)
+        //if (Math.Abs(xSpeed) > ignoreSize) Prends en compte le recul
+        if (xSpeed > ignoreSize)
         {
             {
                 if (ignoreStatut == true)
                 {
                     physicMaterial.dynamicFriction = 0.6f;
                 }
-                rb.AddForce(xSpeed * speedFactor, 0, 0, ForceMode.Acceleration);
+                rb.AddForce((xSpeed - ignoreSize) * speedFactor, 0, 0, ForceMode.Acceleration);
                 ignoreStatut = false;
             }
         }
         //Sinon, il freine
         else
         {
+            if (xSpeed > 0 && rb.velocity.magnitude > 0) 
+            {
+                rb.velocity = new Vector3(rb.velocity.x - (1 * Time.deltaTime), 0, 0);
+            }
+            /*
             if (ignoreStatut == false)
             {
                 rb.AddForce(-rb.velocity.x * brakeFactor, 0, 0, ForceMode.Impulse);
                 physicMaterial.dynamicFriction = 2;
             }
-            //rb.AddForce(-rb.velocity.x * brakeFactor, 0, 0, ForceMode.Acceleration);
-            ignoreStatut = true;
+            if(rb.velocity.magnitude < 3)
+            {
+
+            }
+            //rb.AddForce(-rb.velocity.x * brakeFactor, 0, 0, ForceMode.Acceleration);*/
+            ignoreStatut = true; 
+        }
+    }
+
+    void checkMaxSpeed()
+    {
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            rb.velocity = rb.velocity.normalized * maxSpeed;
         }
     }
 }
