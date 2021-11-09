@@ -51,16 +51,16 @@ public class TumbleController : MonoBehaviour
 
     private void Update()
     {
-        FindCursorPosition();
-        DirCamera();
-        CheckMaxSpeed();
+        //DirCamera();
         Debug();
     }
 
     private void FixedUpdate()
     {
-        SetSpeed();
+        FindCursorPosition();
         SetDirection();
+        SetSpeed();
+        ClampSpeed();
     }
 
     private void FindCursorPosition()
@@ -68,7 +68,6 @@ public class TumbleController : MonoBehaviour
         //Trouve la position sur l'écran par rapport au centre.
         Vector2 mousePos = Input.mousePosition;
         axisRight = Mathf.Lerp(-scale, scale, mousePos.x / Screen.width);
-        UnityEngine.Debug.Log(axisRight);
         axisForward = Mathf.Lerp(-scale, scale, mousePos.y / Screen.height);
     }
 
@@ -134,7 +133,7 @@ public class TumbleController : MonoBehaviour
         }
     }
 
-    private void CheckMaxSpeed()
+    private void ClampSpeed()
     {
         if (rb.velocity.magnitude > maxSpeed)
         {
