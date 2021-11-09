@@ -3,38 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class TumbleController : MonoBehaviour
 {
     [Header("GameObjects")]
-    public Transform camTransfom;
+    [SerializeField] private Transform camTransfom;
     private Rigidbody rb;
-    public Transform helper;
+    [SerializeField] private Transform helper;
     private PhysicMaterial physicMaterial;
     private SphereCollider sCollider;
 
     [Header("Valeurs")]
-    public Vector3 direction;
+    [SerializeField] private Vector3 direction;
     private float xPosition;
     private float yPosition;
-    private int zSpeed;
-    private int xSpeed;
+    private float axisRight;
+    private float axisForward;
     public int scale = 20;
-    public int ignorePercent = 4;
-    private int ignoreSize;
+    public float ignorePercent = 4;
+    private float ignoreSize;
 
 
-    public int maxSpeed = 60;
-    public float speedFactor = 1.8f;
-    public float brakeFactor = 0.2f;
-    public float rotateFactor = 2f;
+    [SerializeField] private int maxSpeed = 60;
+    [SerializeField] private float speedFactor = 1.8f;
+    [SerializeField] private float brakeFactor = 0.2f;
+    [SerializeField] private float rotateFactor = 2f;
 
     [Header("Debug")]
-    public bool showDebug = false;
-    public Text debugText;
+    [SerializeField] private bool showDebug = false;
+    public TextMeshProUGUI debugText;
     private bool ignoreStatut1 = true;
     private bool ignoreStatut2 = false;
-    public int versionFreins = 1;
+    [SerializeField] private int versionFreins = 1;
     private string explicationFreins;
 
 
@@ -48,72 +49,55 @@ public class TumbleController : MonoBehaviour
         debugText.gameObject.SetActive(showDebug);
     }
 
-    void Update()
+    private void Update()
     {
-        findCursorPosition();
-        dirCamera();
-        setSpeed();
-        checkMaxSpeed();
-        setDirection();
-        debug();
+        FindCursorPosition();
+        DirCamera();
+        CheckMaxSpeed();
+        Debug();
     }
 
-    void findCursorPosition()
+    private void FixedUpdate()
+    {
+        SetSpeed();
+        SetDirection();
+    }
+
+    private void FindCursorPosition()
     {
         //Trouve la position sur l'écran par rapport au centre.
-        xPosition = Input.mousePosition.x - (Screen.width / 2);
-        yPosition = Input.mousePosition.y - (Screen.height / 2);
-
-        //Met les valeurs à l'échelle.
-        zSpeed = (int)Math.Ceiling(xPosition / (Screen.width / 2) * scale);
-        xSpeed = (int)Math.Ceiling(yPosition / (Screen.height / 2) * scale);
-
-        //Protège des sorties d'écran.
-        if (zSpeed > scale) 
-        {
-            zSpeed = scale;
-        }
-        if (zSpeed < -scale)
-        {
-            zSpeed = -scale;
-        }
-        if (xSpeed > scale)
-        {
-            xSpeed = scale;
-        }
-        if (xSpeed < -scale)
-        {
-            xSpeed = -scale;
-        }
+        Vector2 mousePos = Input.mousePosition;
+        axisRight = Mathf.Lerp(-scale, scale, mousePos.x / Screen.width);
+        UnityEngine.Debug.Log(axisRight);
+        axisForward = Mathf.Lerp(-scale, scale, mousePos.y / Screen.height);
     }
 
-    void dirCamera()
+    private void DirCamera()
     {
-
         direction = transform.position - camTransfom.position;
         direction.y = 0;
         direction = direction.normalized;
 
         helper.position = transform.position;
         helper.LookAt(transform.position + direction);
-
     }
 
-    void setSpeed()
+    private void SetSpeed()
     {
         //Si c'est au delà de la zone, le tumble accélère.
         //if (Math.Abs(xSpeed) > ignoreSize) Prends en compte le recul
 
 
 
-        if (xSpeed > ignoreSize)
+        if (axisForward > ignoreSize)
         {
             {
                 //Ajoute la force. Distance du centre - la taille du ignoré x l'accélération. Le tout dans la direction de la caméra.
                 //Force de type accélartion.
 
-                Vector3 dir = camTransfom.forward;
-                rb.AddForce((xSpeed - ignoreSize) * speedFactor * dir, ForceMode.Acceleration);
+                
+                Vector3 dir = transform.forward;
+                rb.AddForce((axisForward - ignoreSize) * speedFactor * dir, ForceMode.Acceleration);
                 ignoreStatut1 = false;
             }
         }
@@ -129,28 +113,28 @@ public class TumbleController : MonoBehaviour
             {
                 explicationFreins = "Joue sur la vitesse.";
                 Vector3 dir = camTransfom.forward;
-                rb.velocity = new Vector3(rb.velocity.x - (brakeFactor * Time.deltaTime), 0, 0);
+                rb.velocity = new Vector3(rb.velocity.x - (brakeFactor * Time.fixedDeltaTime), 0, 0);
             }
             //Version 2, ajoute de la force au contraire.
             if (versionFreins == 2)
             {
                 explicationFreins = "Ajoute de la force en face, de type accélération.";
                 Vector3 dir = camTransfom.forward;
-                rb.AddForce((xSpeed - ignoreSize) * brakeFactor * -dir, ForceMode.Acceleration);
+                rb.AddForce((axisForward - ignoreSize) * brakeFactor * (dir * -1), ForceMode.Acceleration);
             }
             //Version 3, ajoute de la force au contraire.
             if (versionFreins == 3)
             {
                 explicationFreins = "Ajoute de la force en face, de type impulsion.";
                 Vector3 dir = camTransfom.forward;
-                rb.AddForce((xSpeed - ignoreSize) * brakeFactor * -dir, ForceMode.Impulse);
+                rb.AddForce((axisForward - ignoreSize) * brakeFactor * (dir * -1), ForceMode.Impulse);
             }
             //}
             ignoreStatut1 = true; 
         }
     }
 
-    void checkMaxSpeed()
+    private void CheckMaxSpeed()
     {
         if (rb.velocity.magnitude > maxSpeed)
         {
@@ -159,16 +143,21 @@ public class TumbleController : MonoBehaviour
         }
     }
 
-    void setDirection()
+    private void SetDirection()
     {
         //Si on est en dehors de la zone.
-        if (Math.Abs(zSpeed) > ignoreSize)
+        if (Math.Abs(axisRight) > ignoreSize)
         {
             //Ajoute la force. Distance du centre - la taille du ignoré x le facteur. Le tout vers la droite.
             //Force de type accélartion.
-
+            /*
             Vector3 dir = camTransfom.right;
             rb.AddForce(zSpeed * rotateFactor * dir, ForceMode.Impulse);
+            */
+
+            Quaternion newRotation = transform.rotation;
+            newRotation.eulerAngles += new Vector3(0,rotateFactor * axisRight * Time.fixedDeltaTime, 0);
+            transform.rotation = newRotation;
 
             ignoreStatut2 = false;
         }
@@ -178,13 +167,13 @@ public class TumbleController : MonoBehaviour
         }
     }
 
-    void debug()
+    private void Debug()
     {
         if (showDebug)
         {
-            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "  - Zone ignorée " + ignoreSize + System.Environment.NewLine
-                + "x: " + xSpeed + " * " + speedFactor + " = " + xSpeed * speedFactor + " | Ignoré: " + ignoreStatut1 + System.Environment.NewLine
-                + "z: " + zSpeed + " * " + rotateFactor + " = " + zSpeed * rotateFactor + " | Ignoré: " + ignoreStatut2 + System.Environment.NewLine
+            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "  - Zone ignorée " + ignoreSize + "\n"
+                + "x: " + axisForward + " * " + speedFactor + " = " + axisForward * speedFactor + " | Ignoré: " + ignoreStatut1 + "\n"
+                + "z: " + axisRight + " * " + rotateFactor + " = " + axisRight * rotateFactor + " | Ignoré: " + ignoreStatut2 + "\n"
                 + "Version frein: " + versionFreins + " - " + explicationFreins;
         }
     }
