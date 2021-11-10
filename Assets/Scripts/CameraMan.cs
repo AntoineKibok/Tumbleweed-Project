@@ -90,7 +90,7 @@ public class CameraMan : MonoBehaviour
     private void SuivreObjetASuivre()
     {
         var position = transform.position;
-        Vector3 posAAttendre = objetASuivre.transform.position;
+        Vector3 posAAttendre = objetASuivre.transform.forward;
 
         posAAttendre += positionOffset;
 

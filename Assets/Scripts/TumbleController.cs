@@ -93,8 +93,6 @@ public class TumbleController : MonoBehaviour
             {
                 //Ajoute la force. Distance du centre - la taille du ignoré x l'accélération. Le tout dans la direction de la caméra.
                 //Force de type accélartion.
-
-                
                 Vector3 dir = transform.forward;
                 rb.AddForce((axisForward - ignoreSize) * speedFactor * dir, ForceMode.Acceleration);
                 ignoreStatut1 = false;

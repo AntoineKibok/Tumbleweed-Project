@@ -13,6 +13,12 @@ public class Follower : MonoBehaviour
     public float height = 2;
     public GameObject targetObject;
     
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, target.position);
+    }
+    
     void Update()
     {
         transform.LookAt(target.TransformPoint(lookDecal));
