@@ -57,13 +57,34 @@ public class TumbleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FindCursorPosition();
-        SetDirection();
-        SetSpeed();
-        ClampSpeed();
+        ApplyControl();
+        //CheckControl();
+        //SetDirection();
+        //SetSpeed();
     }
 
-    private void FindCursorPosition()
+    private void ApplyControl()
+    {
+        
+        rb.AddForce(Input.GetAxis("Horizontal") * rotateFactor * helper.right +
+                    Input.GetAxis("Vertical") * speedFactor * helper.forward);
+        
+
+        ClampSpeed();
+    }
+    
+    private void ClampSpeed()
+    {
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            //Change la vitesse proprement selon la vitesse maxi.
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
+    }
+    
+    /*
+
+    private void CheckControl()
     {
         //Trouve la position sur l'écran par rapport au centre.
         Vector2 mousePos = Input.mousePosition;
@@ -131,15 +152,6 @@ public class TumbleController : MonoBehaviour
         }
     }
 
-    private void ClampSpeed()
-    {
-        if (rb.velocity.magnitude > maxSpeed)
-        {
-            //Change la vitesse proprement selon la vitesse maxi.
-            rb.velocity = rb.velocity.normalized * maxSpeed;
-        }
-    }
-
     private void SetDirection()
     {
         //Si on est en dehors de la zone.
@@ -147,10 +159,10 @@ public class TumbleController : MonoBehaviour
         {
             //Ajoute la force. Distance du centre - la taille du ignoré x le facteur. Le tout vers la droite.
             //Force de type accélartion.
-            /*
-            Vector3 dir = camTransfom.right;
-            rb.AddForce(zSpeed * rotateFactor * dir, ForceMode.Impulse);
-            */
+            //
+            //Vector3 dir = camTransfom.right;
+            //rb.AddForce(zSpeed * rotateFactor * dir, ForceMode.Impulse);
+            //
 
             Quaternion newRotation = transform.rotation;
             newRotation.eulerAngles += new Vector3(0,rotateFactor * axisRight * Time.fixedDeltaTime, 0);
@@ -163,6 +175,8 @@ public class TumbleController : MonoBehaviour
             ignoreStatut2 = true;
         }
     }
+    
+    */
 
     private void Debug()
     {
