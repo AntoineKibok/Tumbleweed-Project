@@ -7,10 +7,10 @@ using TMPro;
 
 public class TumbleController : MonoBehaviour
 {
-    [Header("GameObjects")]
-    [SerializeField] private Transform camTransfom;
+    //[Header("GameObjects")]
+    //[SerializeField] private Transform camTransfom;
     private Rigidbody rb;
-    [SerializeField] private Transform helper;
+    //[SerializeField] private Transform helper;
     private PhysicMaterial physicMaterial;
     private SphereCollider sCollider;
 
@@ -20,23 +20,27 @@ public class TumbleController : MonoBehaviour
     private float yPosition;
     private float axisRight;
     private float axisForward;
-    public int scale = 20;
-    public float ignorePercent = 4;
+    //public int scale = 20;
+    //public float ignorePercent = 4;
     private float ignoreSize;
+    private bool isGrounded = true;
+    private float isGroundValue;
 
 
     [SerializeField] private int maxSpeed = 60;
-    [SerializeField] private float speedFactor = 1.8f;
-    [SerializeField] private float brakeFactor = 0.2f;
-    [SerializeField] private float rotateFactor = 2f;
+    [SerializeField] private float speedFactor = 50;
+    [SerializeField] private float brakeFactor = 50;
+    [SerializeField] private float rotateFactor = 50;
+    [SerializeField] private float jumpFactor = 50;
+
 
     [Header("Debug")]
     [SerializeField] private bool showDebug = false;
     public TextMeshProUGUI debugText;
-    private bool ignoreStatut1 = true;
-    private bool ignoreStatut2 = false;
-    [SerializeField] private int versionFreins = 1;
-    private string explicationFreins;
+    //private bool ignoreStatut1 = true;
+    //private bool ignoreStatut2 = false;
+    //[SerializeField] private int versionFreins = 1;
+    //private string explicationFreins;
 
 
     private void Start()
@@ -44,7 +48,7 @@ public class TumbleController : MonoBehaviour
         //Recupération du rigidbody.
         rb = gameObject.GetComponent<Rigidbody>();
         //Génère la valeur de la zone a ignorer.
-        ignoreSize = scale / (ignorePercent);
+        //ignoreSize = scale / (ignorePercent);
         //Affiche le débug ou non.
         debugText.gameObject.SetActive(showDebug);
     }
@@ -57,20 +61,76 @@ public class TumbleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        FindCursorPosition();
-        SetDirection();
-        SetSpeed();
+        ApplyControl();
+        //CheckControl();
+        //SetDirection();
+        //SetSpeed();
+        
+    }
+    
+    /*
+    private void OnDrawGizmos()
+    { 
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, helper.transform.position);
+    }
+    */
+    
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
+    }
+
+
+    private void ApplyControl()
+    {
+        
+        //rb.AddForce(Input.GetAxis("Horizontal") * rotateFactor * helper.right +
+        //            Input.GetAxis("Vertical") * speedFactor * helper.forward);
+
+
+        UnityEngine.Debug.Log(speedFactor);
+
+        if (Input.GetKey(KeyCode.UpArrow)) 
+            rb.AddForce(Vector3.forward * speedFactor , ForceMode.Acceleration);
+		
+        if (Input.GetKey(KeyCode.DownArrow)) 
+            rb.AddForce(Vector3.back * brakeFactor , ForceMode.Acceleration);
+
+        if (Input.GetKey(KeyCode.LeftArrow)) 
+            rb.AddForce(Vector3.left * rotateFactor , ForceMode.Acceleration);
+		
+        if (Input.GetKey(KeyCode.RightArrow)) 
+            rb.AddForce(Vector3.right * rotateFactor, ForceMode.Acceleration);
+
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
+            rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
+
         ClampSpeed();
     }
-
-    private void FindCursorPosition()
+    
+    private void ClampSpeed()
     {
-        //Trouve la position sur l'écran par rapport au centre.
-        Vector2 mousePos = Input.mousePosition;
-        axisRight = Mathf.Lerp(-scale, scale, mousePos.x / Screen.width);
-        axisForward = Mathf.Lerp(-scale, scale, mousePos.y / Screen.height);
+        if (rb.velocity.magnitude > maxSpeed)
+        {
+            //Change la vitesse proprement selon la vitesse maxi.
+            rb.velocity = rb.velocity.normalized * maxSpeed;
+        }
     }
-
+    
+    /*
     private void DirCamera()
     {
         direction = transform.position - camTransfom.position;
@@ -80,6 +140,19 @@ public class TumbleController : MonoBehaviour
         helper.position = transform.position;
         helper.LookAt(transform.position + direction);
     }
+    
+
+
+    private void CheckControl()
+    {
+        //Trouve la position sur l'écran par rapport au centre.
+        Vector2 mousePos = Input.mousePosition;
+        axisRight = Mathf.Lerp(-scale, scale, mousePos.x / Screen.width);
+        axisForward = Mathf.Lerp(-scale, scale, mousePos.y / Screen.height);
+    }
+
+
+
 
     private void SetSpeed()
     {
@@ -93,8 +166,6 @@ public class TumbleController : MonoBehaviour
             {
                 //Ajoute la force. Distance du centre - la taille du ignoré x l'accélération. Le tout dans la direction de la caméra.
                 //Force de type accélartion.
-
-                
                 Vector3 dir = transform.forward;
                 rb.AddForce((axisForward - ignoreSize) * speedFactor * dir, ForceMode.Acceleration);
                 ignoreStatut1 = false;
@@ -133,15 +204,6 @@ public class TumbleController : MonoBehaviour
         }
     }
 
-    private void ClampSpeed()
-    {
-        if (rb.velocity.magnitude > maxSpeed)
-        {
-            //Change la vitesse proprement selon la vitesse maxi.
-            rb.velocity = rb.velocity.normalized * maxSpeed;
-        }
-    }
-
     private void SetDirection()
     {
         //Si on est en dehors de la zone.
@@ -149,10 +211,10 @@ public class TumbleController : MonoBehaviour
         {
             //Ajoute la force. Distance du centre - la taille du ignoré x le facteur. Le tout vers la droite.
             //Force de type accélartion.
-            /*
-            Vector3 dir = camTransfom.right;
-            rb.AddForce(zSpeed * rotateFactor * dir, ForceMode.Impulse);
-            */
+            //
+            //Vector3 dir = camTransfom.right;
+            //rb.AddForce(zSpeed * rotateFactor * dir, ForceMode.Impulse);
+            //
 
             Quaternion newRotation = transform.rotation;
             newRotation.eulerAngles += new Vector3(0,rotateFactor * axisRight * Time.fixedDeltaTime, 0);
@@ -165,15 +227,19 @@ public class TumbleController : MonoBehaviour
             ignoreStatut2 = true;
         }
     }
+    
+    */
 
     private void Debug()
     {
         if (showDebug)
         {
+            /*
             debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "  - Zone ignorée " + ignoreSize + "\n"
                 + "x: " + axisForward + " * " + speedFactor + " = " + axisForward * speedFactor + " | Ignoré: " + ignoreStatut1 + "\n"
                 + "z: " + axisRight + " * " + rotateFactor + " = " + axisRight * rotateFactor + " | Ignoré: " + ignoreStatut2 + "\n"
                 + "Version frein: " + versionFreins + " - " + explicationFreins;
+                */
         }
     }
 

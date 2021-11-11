@@ -121,10 +121,10 @@ MonoBehaviour:
     y: 30
     width: 1920
     height: 947
-  m_MinSize: {x: 908, y: 442}
-  m_MaxSize: {x: 22003, y: 10021}
+  m_MinSize: {x: 911, y: 442}
+  m_MaxSize: {x: 22006, y: 10021}
   vertical: 0
-  controlID: 15901
+  controlID: 3014
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -149,7 +149,7 @@ MonoBehaviour:
   m_MinSize: {x: 201, y: 442}
   m_MaxSize: {x: 4001, y: 8042}
   vertical: 1
-  controlID: 15902
+  controlID: 3019
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -221,8 +221,8 @@ MonoBehaviour:
     y: 0
     width: 307
     height: 947
-  m_MinSize: {x: 202, y: 221}
-  m_MaxSize: {x: 4002, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 14}
   m_Panes:
   - {fileID: 14}
@@ -273,8 +273,8 @@ MonoBehaviour:
     y: 0
     width: 419
     height: 947
-  m_MinSize: {x: 276, y: 71}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 275, y: 50}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 16}
   m_Panes:
   - {fileID: 16}
@@ -315,7 +315,7 @@ MonoBehaviour:
   m_TextureFilterMode: 0
   m_TextureHideFlags: 61
   m_RenderIMGUI: 1
-  m_MaximizeOnPlay: 1
+  m_MaximizeOnPlay: 0
   m_UseMipMap: 0
   m_VSyncEnabled: 0
   m_Gizmos: 0
@@ -405,9 +405,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.4961996, y: 1.545002, z: -0.14335036}
+    m_Target: {x: 19.929306, y: 3.6400151, z: 13.90003}
     speed: 2
-    m_Value: {x: -4.4961996, y: 1.545002, z: -0.14335036}
+    m_Value: {x: 19.929306, y: 3.6400151, z: 13.90003}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -458,9 +458,9 @@ MonoBehaviour:
     speed: 2
     m_Value: {x: -0.14611468, y: 0.8235627, z: -0.24559087, w: -0.4899798}
   m_Size:
-    m_Target: 5.051322
+    m_Target: 5.9644685
     speed: 2
-    m_Value: 5.051322
+    m_Value: 5.9644685
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -478,7 +478,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
+  m_LastSceneViewRotation: {x: -0.1461147, y: 0.82356286, z: -0.24559093, w: -0.48997992}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -513,9 +513,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 40420000
-      m_LastClickedID: 16960
-      m_ExpandedIDs: b8c4fffff44100004a420000b442000016430000
+      m_SelectedIDs: 9e750000
+      m_LastClickedID: 30110
+      m_ExpandedIDs: 8291ffff9c91ffff2cbdffffec4400000a450000344500005c4500006e450000a04500001075000034750000b0750000ec750000f2750000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -577,12 +577,12 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scripts
+    - Assets/Materials
     m_Globs: []
   m_ViewMode: 1
   m_StartGridSize: 64
   m_LastFolders:
-  - Assets/Scripts
+  - Assets/Materials
   m_LastFoldersGridSize: -1
   m_LastProjectPath: C:\Users\antoi\Documents\Master AMINJ\Master 2\Premier semestre\904
     Prototypage de dispositifs ludiques\Tumbleweed-Project
@@ -590,9 +590,9 @@ MonoBehaviour:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: b0440000
-    m_LastClickedID: 17584
-    m_ExpandedIDs: 0000000096440000984400009a4400009c4400009e440000a0440000a2440000
+    m_SelectedIDs: f8450000
+    m_LastClickedID: 17912
+    m_ExpandedIDs: 00000000e4450000e6450000e8450000ea450000ec450000ee450000f0450000f845000054490000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -620,7 +620,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000096440000984400009a4400009c4400009e440000a0440000a2440000
+    m_ExpandedIDs: 00000000e4450000e6450000e8450000ea450000ec450000ee450000f0450000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_ListAreaState:
     m_SelectedInstanceIDs: 
     m_LastClickedInstanceID: 0
-    m_HadKeyboardFocusLastEvent: 0
+    m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: 000000009e440000
     m_RenameOverlay:
       m_UserAcceptedRename: 0

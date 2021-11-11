@@ -140,6 +140,12 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/antoi/Documents/Master AMINJ/Master 2/Premier semestre/904 Prototypage de dispositifs ludiques/Tumbleweed-Project/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Cinemachine">
+ <HintPath>C:/Users/antoi/Documents/Master AMINJ/Master 2/Premier semestre/904 Prototypage de dispositifs ludiques/Tumbleweed-Project/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+ </Reference>
+ <Reference Include="com.unity.cinemachine.editor">
+ <HintPath>C:/Users/antoi/Documents/Master AMINJ/Master 2/Premier semestre/904 Prototypage de dispositifs ludiques/Tumbleweed-Project/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2020.1.8f1/Editor/Data/Managed/UnityEngine/UnityEngine.dll</HintPath>
  </Reference>
