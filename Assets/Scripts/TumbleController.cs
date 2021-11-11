@@ -7,10 +7,10 @@ using TMPro;
 
 public class TumbleController : MonoBehaviour
 {
-    [Header("GameObjects")]
-    [SerializeField] private Transform camTransfom;
+    //[Header("GameObjects")]
+    //[SerializeField] private Transform camTransfom;
     private Rigidbody rb;
-    [SerializeField] private Transform helper;
+    //[SerializeField] private Transform helper;
     private PhysicMaterial physicMaterial;
     private SphereCollider sCollider;
 
@@ -20,23 +20,25 @@ public class TumbleController : MonoBehaviour
     private float yPosition;
     private float axisRight;
     private float axisForward;
-    public int scale = 20;
-    public float ignorePercent = 4;
+    //public int scale = 20;
+    //public float ignorePercent = 4;
     private float ignoreSize;
 
 
     [SerializeField] private int maxSpeed = 60;
-    [SerializeField] private float speedFactor = 1.8f;
-    [SerializeField] private float brakeFactor = 0.2f;
-    [SerializeField] private float rotateFactor = 2f;
+    [SerializeField] private float speedFactor = 50;
+    [SerializeField] private float brakeFactor = 50;
+    [SerializeField] private float rotateFactor = 50;
+    [SerializeField] private float jumpFactor = 50;
+
 
     [Header("Debug")]
     [SerializeField] private bool showDebug = false;
     public TextMeshProUGUI debugText;
-    private bool ignoreStatut1 = true;
-    private bool ignoreStatut2 = false;
-    [SerializeField] private int versionFreins = 1;
-    private string explicationFreins;
+    //private bool ignoreStatut1 = true;
+    //private bool ignoreStatut2 = false;
+    //[SerializeField] private int versionFreins = 1;
+    //private string explicationFreins;
 
 
     private void Start()
@@ -44,7 +46,7 @@ public class TumbleController : MonoBehaviour
         //Recupération du rigidbody.
         rb = gameObject.GetComponent<Rigidbody>();
         //Génère la valeur de la zone a ignorer.
-        ignoreSize = scale / (ignorePercent);
+        //ignoreSize = scale / (ignorePercent);
         //Affiche le débug ou non.
         debugText.gameObject.SetActive(showDebug);
     }
@@ -61,13 +63,43 @@ public class TumbleController : MonoBehaviour
         //CheckControl();
         //SetDirection();
         //SetSpeed();
+        
+        if (Input.GetButton("Jump"))
+        {
+            //Apply a force to this Rigidbody in direction of this GameObjects up axis
+            rb.AddForce(transform.up * 20f);
+        }
     }
+    
+    /*
+    private void OnDrawGizmos()
+    { 
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position, helper.transform.position);
+    }
+    */
+
 
     private void ApplyControl()
     {
         
-        rb.AddForce(Input.GetAxis("Horizontal") * rotateFactor * helper.right +
-                    Input.GetAxis("Vertical") * speedFactor * helper.forward);
+        //rb.AddForce(Input.GetAxis("Horizontal") * rotateFactor * helper.right +
+        //            Input.GetAxis("Vertical") * speedFactor * helper.forward);
+        
+        if (Input.GetKey(KeyCode.UpArrow)) 
+            rb.AddForce(Vector3.forward * speedFactor);
+		
+        if (Input.GetKey(KeyCode.DownArrow)) 
+            rb.AddForce(Vector3.back * brakeFactor);
+
+        if (Input.GetKey(KeyCode.LeftArrow)) 
+            rb.AddForce(Vector3.left * rotateFactor);
+		
+        if (Input.GetKey(KeyCode.RightArrow)) 
+            rb.AddForce(Vector3.right * rotateFactor);
+
+        if (Input.GetKey(KeyCode.Space))
+            rb.AddForce(Vector3.up * jumpFactor);
         
 
         ClampSpeed();
@@ -83,15 +115,6 @@ public class TumbleController : MonoBehaviour
     }
     
     /*
-
-    private void CheckControl()
-    {
-        //Trouve la position sur l'écran par rapport au centre.
-        Vector2 mousePos = Input.mousePosition;
-        axisRight = Mathf.Lerp(-scale, scale, mousePos.x / Screen.width);
-        axisForward = Mathf.Lerp(-scale, scale, mousePos.y / Screen.height);
-    }
-
     private void DirCamera()
     {
         direction = transform.position - camTransfom.position;
@@ -101,6 +124,19 @@ public class TumbleController : MonoBehaviour
         helper.position = transform.position;
         helper.LookAt(transform.position + direction);
     }
+    
+
+
+    private void CheckControl()
+    {
+        //Trouve la position sur l'écran par rapport au centre.
+        Vector2 mousePos = Input.mousePosition;
+        axisRight = Mathf.Lerp(-scale, scale, mousePos.x / Screen.width);
+        axisForward = Mathf.Lerp(-scale, scale, mousePos.y / Screen.height);
+    }
+
+
+
 
     private void SetSpeed()
     {
@@ -182,10 +218,12 @@ public class TumbleController : MonoBehaviour
     {
         if (showDebug)
         {
+            /*
             debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "  - Zone ignorée " + ignoreSize + "\n"
                 + "x: " + axisForward + " * " + speedFactor + " = " + axisForward * speedFactor + " | Ignoré: " + ignoreStatut1 + "\n"
                 + "z: " + axisRight + " * " + rotateFactor + " = " + axisRight * rotateFactor + " | Ignoré: " + ignoreStatut2 + "\n"
                 + "Version frein: " + versionFreins + " - " + explicationFreins;
+                */
         }
     }
 
