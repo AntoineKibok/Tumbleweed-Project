@@ -3,34 +3,18 @@ using TMPro;
 
 public class TumbleController : MonoBehaviour
 {
-
     private Rigidbody rb;
-    private PhysicMaterial physicMaterial;
-    private SphereCollider sCollider;
     public Transform camTransform;
+    private bool isGrounded = true;
 
     [Header("Valeurs")]
-    [SerializeField] private Vector3 direction;
-    private float xPosition;
-    private float yPosition;
-    private float axisRight;
-    private float axisForward;
-    private float ignoreSize;
-    private bool isGrounded = true;
-    private float isGroundValue;
-
-
     [SerializeField] private int maxSpeed = 60;
-    [SerializeField] private float speedFactor = 50;
-    [SerializeField] private float brakeFactor = 50;
-    [SerializeField] private float rotateFactor = 50;
-    [SerializeField] private float jumpFactor = 50;
-
+    [SerializeField] private float speedFactor = 7;
+    [SerializeField] private float jumpFactor = 2;
 
     [Header("Debug")]
     [SerializeField] private bool showDebug = false;
     public TextMeshProUGUI debugText;
-
 
     private void Start()
     {
@@ -47,27 +31,24 @@ public class TumbleController : MonoBehaviour
     private void FixedUpdate()
     {
         ApplyControl();
-        
     }
     
-    
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
         }
     }
-
-    void OnCollisionExit(Collision collision)
+    
+    private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
         }
     }
-
-
+    
     private void ApplyControl()
     {
         Vector3 forwardDir = camTransform.forward;
@@ -77,11 +58,19 @@ public class TumbleController : MonoBehaviour
         Vector3 rightDir = camTransform.right;
         rightDir = new Vector3(rightDir.x, 0, rightDir.z);
         rightDir = rightDir.normalized;
-        
+
+
         rb.AddForce(forwardDir * Input.GetAxis("Vertical") * speedFactor 
                     + rightDir * Input.GetAxis("Horizontal") * speedFactor);
+
+        float mouseDecelration = 1 - Mathf.Abs(Input.GetAxis("Mouse X") * 0.02f);
+        rb.velocity = rb.velocity * mouseDecelration;
+        
+        if (Input.GetKey(KeyCode.Space) && isGrounded)
+            rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
         
         ClampSpeed();
+
     }
     
     private void ClampSpeed()
@@ -97,12 +86,7 @@ public class TumbleController : MonoBehaviour
     {
         if (showDebug)
         {
-            /*
-            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "  - Zone ignorée " + ignoreSize + "\n"
-                + "x: " + axisForward + " * " + speedFactor + " = " + axisForward * speedFactor + " | Ignoré: " + ignoreStatut1 + "\n"
-                + "z: " + axisRight + " * " + rotateFactor + " = " + axisRight * rotateFactor + " | Ignoré: " + ignoreStatut2 + "\n"
-                + "Version frein: " + versionFreins + " - " + explicationFreins;
-                */
+            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "\n";
         }
     }
 
