@@ -1602,7 +1602,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711604575}
-  m_LocalRotation: {x: 0.025841672, y: -0.0000000010750397, z: 2.7790107e-11, w: 0.99966604}
+  m_LocalRotation: {x: 0.025841672, y: 0.0000000010750397, z: -2.7790107e-11, w: 0.99966604}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2116,7 +2116,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   applyTilt: 1
   tiltFactor: 4
-  smoothTimeTilt: 3
+  smoothTimeTilt: 30
 --- !u!1001 &908693550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2328,7 +2328,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.043972813, y: 2.5600205e-10, z: 1.1270521e-11, w: 0.99903274}
+  m_LocalRotation: {x: 0.043972813, y: -2.5600205e-10, z: -1.1270521e-11, w: 0.99903274}
   m_LocalPosition: {x: 0, y: 3, z: -6.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -2541,7 +2541,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &1021772549
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -3431,9 +3431,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camTransform: {fileID: 963194228}
   maxSpeed: 60
-  speedFactor: 7
+  speedFactor: 10
   jumpFactor: 2
-  showDebug: 0
+  showDebug: 1
   debugText: {fileID: 515511666}
 --- !u!1001 &1597663730
 PrefabInstance:

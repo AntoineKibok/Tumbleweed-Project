@@ -65,11 +65,31 @@ public class TumbleController : MonoBehaviour
 
         float mouseDecelration = 1 - Mathf.Abs(Input.GetAxis("Mouse X") * 0.02f);
         rb.velocity = rb.velocity * mouseDecelration;
-        
-        if (Input.GetKey(KeyCode.Space) && isGrounded)
+
+        if (Input.GetAxis("Jump") != 0 && isGrounded)
+        {
+            if (rb.velocity.magnitude > 0.3f)
+            {
+                rb.AddForce(forwardDir * (jumpFactor/2), ForceMode.Impulse);
+            }
             rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
+        }
+        
+        if (Input.GetAxis("Jump") != 0 && !isGrounded)
+        {
+            rb.useGravity = false;
+        }
+        else
+        {
+            rb.useGravity = true;
+        }
         
         ClampSpeed();
+
+    }
+
+    public void Jump(float factor)
+    {
 
     }
     
