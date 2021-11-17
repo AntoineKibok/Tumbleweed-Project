@@ -1,16 +1,21 @@
 ﻿using UnityEngine;
 using TMPro;
+using UnityEngine.Serialization;
 
 public class TumbleController : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform camTransform;
-    private bool isGrounded = true;
+    private BigColliderUtil BigColliderUtil;
+    public SphereCollider colliderBigger;
+    public bool isGrounded = true;
+    public bool isBigColliding = true;
 
     [Header("Valeurs")]
-    [SerializeField] private int maxSpeed = 60;
+    [SerializeField] public int maxSpeed = 60;
     [SerializeField] private float speedFactor = 7;
     [SerializeField] private float jumpFactor = 2;
+    public bool flyingMode = false;
 
     [Header("Debug")]
     [SerializeField] private bool showDebug = false;
@@ -39,6 +44,7 @@ public class TumbleController : MonoBehaviour
         {
             isGrounded = true;
         }
+        
     }
     
     private void OnCollisionExit(Collision collision)
@@ -51,6 +57,7 @@ public class TumbleController : MonoBehaviour
     
     private void ApplyControl()
     {
+        //Initialise les valeurs
         Vector3 forwardDir = camTransform.forward;
         forwardDir = new Vector3(forwardDir.x, 0, forwardDir.z);
         forwardDir = forwardDir.normalized;
@@ -60,37 +67,50 @@ public class TumbleController : MonoBehaviour
         rightDir = rightDir.normalized;
 
 
+        //Déplace en fonction des contrôles
         rb.AddForce(forwardDir * Input.GetAxis("Vertical") * speedFactor 
                     + rightDir * Input.GetAxis("Horizontal") * speedFactor);
 
+        //Baisse de la vitesse quand caméra bouge (bug fix)
         float mouseDecelration = 1 - Mathf.Abs(Input.GetAxis("Mouse X") * 0.02f);
         rb.velocity = rb.velocity * mouseDecelration;
 
+        //Saute
+        Jump(jumpFactor, forwardDir);
+        
+        //Contrôle la vitesse
+        ClampSpeed();
+
+
+    }
+
+    public void Jump(float factor, Vector3 forwardDir)
+    {
         if (Input.GetAxis("Jump") != 0 && isGrounded)
         {
+            //Ajoute un petit booste de vitesse
             if (rb.velocity.magnitude > 0.3f)
             {
                 rb.AddForce(forwardDir * (jumpFactor/2), ForceMode.Impulse);
             }
+            
+            //Saute
             rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
         }
-        
-        if (Input.GetAxis("Jump") != 0 && !isGrounded)
+
+
+        if (flyingMode)
         {
-            rb.useGravity = false;
-        }
-        else
-        {
-            rb.useGravity = true;
+            if (Input.GetAxis("Jump") != 0 && !isGrounded)
+            {
+                rb.useGravity = false;
+            }
+            else
+            {
+                rb.useGravity = true;
+            }
         }
         
-        ClampSpeed();
-
-    }
-
-    public void Jump(float factor)
-    {
-
     }
     
     private void ClampSpeed()
@@ -106,7 +126,8 @@ public class TumbleController : MonoBehaviour
     {
         if (showDebug)
         {
-            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "\n";
+            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "\n" +
+                rb.velocity.magnitude +"   +   " + ((60 / 100) * 50);
         }
     }
 
