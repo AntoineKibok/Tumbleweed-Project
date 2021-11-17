@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using TMPro;
+
+
 
 public class CameraEffects : MonoBehaviour
 
@@ -20,27 +23,33 @@ public class CameraEffects : MonoBehaviour
     public bool applyShake = true;
     public bool fakeShake = false;
     public Rigidbody rbPlayer;
-    private TumbleController TumbleController;
     public int percentActivation = 80;
-
+    public int speedLimit;
+    private float shakeStart, shakeFactor, currentSpeed;
     
-
+    [Header("Debug")]
+    public bool showDebug;
+    public TextMeshProUGUI debugText;
 
     void Start()
     {
         cam = gameObject.GetComponent<CinemachineFreeLook>();
+        
+        speedLimit = GameObject.Find("Player").GetComponent<TumbleController>().maxSpeed;
+
+        if (applyShake)
+        {
+            shakeStart = speedLimit * (percentActivation * 0.01f);
+        }
     }
 
     private void Update()
     {
-
         if (applyTilt) 
             ApplyTilt();
         
         if (applyShake)
             ApplyShake();
-
-
     }
 
     private void ApplyTilt()
@@ -56,23 +65,29 @@ public class CameraEffects : MonoBehaviour
 
     private void ApplyShake()
     {
-        int maxSpeed = 10;
-        float currentSpeed = rbPlayer.velocity.magnitude;
-        
-        float shakeFactor = Mathf.Lerp(0, 1, currentSpeed / maxSpeed);
 
-        
-        if (currentSpeed > maxSpeed)
+        currentSpeed = rbPlayer.velocity.magnitude;
+
+        if (currentSpeed > shakeStart)
         {
-            Debug.Log("Shake " + maxSpeed+ "   " + shakeFactor);
+            shakeFactor = ((currentSpeed - speedLimit ) / (shakeStart - speedLimit)) * -1 + 1 ;
             Shake(shakeFactor);
         }
 
         else
-        { 
-            Debug.Log("Pas shake " + maxSpeed+ "   " + shakeFactor);
+        {
+            shakeFactor = 0;
             Shake(0);
         }
+        
+        
+        if (showDebug)
+        {
+            debugText.text = "Current: " + currentSpeed + " / " + speedLimit +
+                             "\n" + "StartShake: " + shakeStart +
+                             "\n" + "ShakeFactor: " + shakeFactor;
+        }
+        
     }
     public void Shake(float intensity)
     {
@@ -80,4 +95,5 @@ public class CameraEffects : MonoBehaviour
         cam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = intensity;
         cam.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = intensity;
     }
+
 }

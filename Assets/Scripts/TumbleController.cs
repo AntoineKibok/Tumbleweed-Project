@@ -12,7 +12,7 @@ public class TumbleController : MonoBehaviour
     public bool isBigColliding = true;
 
     [Header("Valeurs")]
-    [SerializeField] public int maxSpeed = 60;
+    public int maxSpeed = 60;
     [SerializeField] private float speedFactor = 7;
     [SerializeField] private float jumpFactor = 2;
     public bool flyingMode = false;
@@ -96,6 +96,7 @@ public class TumbleController : MonoBehaviour
             
             //Saute
             rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
+            //JumpEffect(forwardDir);
         }
 
 
@@ -104,6 +105,7 @@ public class TumbleController : MonoBehaviour
             if (Input.GetAxis("Jump") != 0 && !isGrounded)
             {
                 rb.useGravity = false;
+
             }
             else
             {
@@ -112,10 +114,17 @@ public class TumbleController : MonoBehaviour
         }
         
     }
+
+    //Ne fonctionne pas encore, problèmes a cause de la rotation
+    public void JumpEffect(Vector3 forwardDir)
+    {
+        transform.localScale = new Vector3(transform.localScale.x,transform.localScale.y-0.01f,transform.localScale.x);
+
+    }
     
     private void ClampSpeed()
     {
-        if (rb.velocity.magnitude > maxSpeed)
+        if (rb.velocity.magnitude >= maxSpeed)
         {
             //Change la vitesse proprement selon la vitesse maxi.
             rb.velocity = rb.velocity.normalized * maxSpeed;

@@ -1679,7 +1679,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 711604575}
-  m_LocalRotation: {x: 0.025841672, y: -0.0000000010750397, z: 2.7790107e-11, w: 0.99966604}
+  m_LocalRotation: {x: 0.025841672, y: 0.0000000010750397, z: -2.7790107e-11, w: 0.99966604}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -2198,6 +2198,9 @@ MonoBehaviour:
   fakeShake: 1
   rbPlayer: {fileID: 1594827247}
   percentActivation: 80
+  speedLimit: 0
+  showDebug: 1
+  debugText: {fileID: 515511666}
 --- !u!1001 &908693550
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2409,7 +2412,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.043972813, y: 2.5600205e-10, z: 1.1270521e-11, w: 0.99903274}
+  m_LocalRotation: {x: 0.043972813, y: -2.5600205e-10, z: -1.1270521e-11, w: 0.99903274}
   m_LocalPosition: {x: 0, y: 3, z: -6.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -3416,6 +3419,7 @@ GameObject:
   - component: {fileID: 1594827243}
   - component: {fileID: 1594827247}
   - component: {fileID: 1594827248}
+  - component: {fileID: 1594827249}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3537,8 +3541,27 @@ MonoBehaviour:
   speedFactor: 10
   jumpFactor: 2
   flyingMode: 1
-  showDebug: 1
+  showDebug: 0
   debugText: {fileID: 515511666}
+--- !u!95 &1594827249
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594827242}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: bb293aa12315744499a91238f7e8ad6e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1597663730
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4923,6 +4946,10 @@ PrefabInstance:
     - target: {fileID: 6498545764304642425, guid: 2685ee7a3f871814c99513e47622c7d8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6498545764304642425, guid: 2685ee7a3f871814c99513e47622c7d8, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6498545764304642425, guid: 2685ee7a3f871814c99513e47622c7d8, type: 3}
       propertyPath: m_LocalScale.y
