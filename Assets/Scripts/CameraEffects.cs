@@ -21,10 +21,9 @@ public class CameraEffects : MonoBehaviour
     
     [Header("Vitesse secoueuse")]
     public bool applyShake = true;
-    public bool fakeShake = false;
-    public Rigidbody rbPlayer;
-    public int percentActivation = 80;
-    public int speedLimit;
+    private Rigidbody rbPlayer;
+    public int percentActivation = 70;
+    private int speedLimit;
     private float shakeStart, shakeFactor, currentSpeed;
     
     [Header("Debug")]
@@ -35,7 +34,8 @@ public class CameraEffects : MonoBehaviour
     {
         cam = gameObject.GetComponent<CinemachineFreeLook>();
         
-        speedLimit = GameObject.Find("Player").GetComponent<TumbleController>().maxSpeed;
+        speedLimit = GameObject.FindWithTag("Player").GetComponent<TumbleController>().maxSpeed;
+        rbPlayer = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
 
         if (applyShake)
         {

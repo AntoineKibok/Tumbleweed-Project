@@ -25,7 +25,7 @@ public class TumbleController : MonoBehaviour
     {
         //Recupération du rigidbody.
         rb = gameObject.GetComponent<Rigidbody>();
-        debugText.gameObject.SetActive(showDebug);
+        //debugText.gameObject.SetActive(showDebug);
     }
 
     private void Update()
