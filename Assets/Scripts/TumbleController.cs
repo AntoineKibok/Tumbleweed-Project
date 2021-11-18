@@ -6,8 +6,6 @@ public class TumbleController : MonoBehaviour
 {
     private Rigidbody rb;
     public Transform camTransform;
-    private BigColliderUtil BigColliderUtil;
-    public SphereCollider colliderBigger;
     public bool isGrounded = true;
     public bool isBigColliding = true;
 
@@ -25,6 +23,7 @@ public class TumbleController : MonoBehaviour
     {
         //Recupération du rigidbody.
         rb = gameObject.GetComponent<Rigidbody>();
+
         //debugText.gameObject.SetActive(showDebug);
     }
 
@@ -35,6 +34,7 @@ public class TumbleController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        isBigColliding = GameObject.Find("BigCollider").GetComponent<BigColliderUtil>().isColliding;
         ApplyControl();
     }
     
@@ -98,11 +98,18 @@ public class TumbleController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
             //JumpEffect(forwardDir);
         }
+        
+        if (showDebug)
+        {
+            debugText.text = "Big Collide:   " + isBigColliding + "\n" +
+                             "Petit Collide: "  + isGrounded;
+        }
+        
 
 
         if (flyingMode)
         {
-            if (Input.GetAxis("Jump") != 0 && !isGrounded)
+            if (Input.GetAxis("Jump") != 0 && !isBigColliding)
             {
                 rb.useGravity = false;
 
@@ -133,11 +140,7 @@ public class TumbleController : MonoBehaviour
     
     private void Debug()
     {
-        if (showDebug)
-        {
-            debugText.text = "Vitesse: " + rb.velocity.magnitude.ToString() + "\n" +
-                rb.velocity.magnitude +"   +   " + ((60 / 100) * 50);
-        }
+
     }
 
 }
