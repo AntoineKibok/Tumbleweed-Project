@@ -19,6 +19,12 @@ public class TumbleController : MonoBehaviour
     [SerializeField] private bool showDebug = false;
     public TextMeshProUGUI debugText;
 
+    public float rayLenght = 1;
+    public float energy = 0;
+    public float energyMax = 100;
+    public float energyDrain = 1;
+    public float enregisedJumpStrengh = 1;
+
     private void Start()
     {
         //Recupération du rigidbody.
@@ -30,6 +36,9 @@ public class TumbleController : MonoBehaviour
     private void Update()
     {
         Debug();
+        checkExit();
+        checkDebug();
+        GroundDetection();
     }
 
     private void FixedUpdate()
@@ -37,20 +46,37 @@ public class TumbleController : MonoBehaviour
         isBigColliding = GameObject.Find("BigCollider").GetComponent<BigColliderUtil>().isColliding;
         ApplyControl();
     }
-    
-    private void OnCollisionEnter(Collision collision)
+
+    private void checkExit()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (Input.GetKey(KeyCode.Escape))
         {
-            isGrounded = true;
+            Application.Quit();
         }
-        
     }
     
-    private void OnCollisionExit(Collision collision)
+    private void checkDebug()
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (Input.GetKey(KeyCode.N))
+        {   
+            showDebug = !showDebug;
+        }
+    }
+
+    private void GroundDetection()
+    {
+        Vector3 origin = transform.position;
+        Vector3 dir = Vector3.down;
+        RaycastHit hit;
+        if (Physics.Raycast(origin, dir, out hit, rayLenght))
         {
+            UnityEngine.Debug.DrawRay(origin,dir * hit.distance, Color.green);
+            isGrounded = true;
+            energy = energyMax;
+        }
+        else
+        {
+            UnityEngine.Debug.DrawRay(origin,dir * rayLenght, Color.red);
             isGrounded = false;
         }
     }
@@ -98,15 +124,18 @@ public class TumbleController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
             //JumpEffect(forwardDir);
         }
-        
-        if (showDebug)
+
+
+        if (energy > 0)
         {
-            debugText.text = "Big Collide:   " + isBigColliding + "\n" +
-                             "Petit Collide: "  + isGrounded;
+            if (Input.GetAxis("Jump") != 0)
+            {
+                energy -= energyDrain;
+                rb.AddForce(Vector3.up * enregisedJumpStrengh);
+            }
         }
-        
 
-
+        /*
         if (flyingMode)
         {
             if (Input.GetAxis("Jump") != 0 && !isBigColliding)
@@ -119,6 +148,7 @@ public class TumbleController : MonoBehaviour
                 rb.useGravity = true;
             }
         }
+        */
         
     }
 
@@ -140,7 +170,12 @@ public class TumbleController : MonoBehaviour
     
     private void Debug()
     {
+        
+        if (showDebug)
+        {
+            debugText.text = "Big Collide:   " + isBigColliding + "\n" +
+                             "Petit Collide: "  + isGrounded;
+        }
 
     }
-
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
@@ -14,10 +15,12 @@ public class CameraEffects : MonoBehaviour
 
     [Header("Camera tilt")]
     public bool applyTilt = true;
-    public float tiltFactor = 2f;
+    public float tiltFactor = 3f;
     public float smoothTimeTilt = 3f;
     private float tiltValue = 0f;
     private float tiltVelocity = 0.0f;
+    public float cameraTilt;
+    public float cameraTiltLerpSpeed = 0.02f;
     
     [Header("Vitesse secoueuse")]
     public bool applyShake = true;
@@ -29,6 +32,26 @@ public class CameraEffects : MonoBehaviour
     [Header("Debug")]
     public bool showDebug;
     public TextMeshProUGUI debugText;
+    
+    private void checkDebug()
+    {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            
+            showDebug = !showDebug;
+
+            if (showDebug == true)
+            {
+                debugText.gameObject.SetActive(true);
+            }
+            
+            if (showDebug == false)
+            {
+                debugText.gameObject.SetActive(false);
+            }
+
+        }
+    }
 
     void Start()
     {
@@ -50,14 +73,20 @@ public class CameraEffects : MonoBehaviour
         
         if (applyShake)
             ApplyShake();
+        
+        checkDebug();
     }
 
     private void ApplyTilt()
     {
         float newTiltValue = (Input.GetAxis("Horizontal") * tiltFactor) * -1;
-        float smoothTiltValue = Mathf.SmoothDamp(tiltValue, tiltFactor, ref tiltVelocity, smoothTimeTilt, 0.01f);
+        //float smoothTiltValue = Mathf.SmoothDamp(tiltValue, tiltFactor, ref tiltVelocity, smoothTimeTilt, 0.01f);
+
+        cameraTilt = Mathf.Lerp(cameraTilt, newTiltValue, cameraTiltLerpSpeed);
         
-        cam.m_Lens.Dutch = smoothTiltValue;
+        
+        
+        cam.m_Lens.Dutch = cameraTilt;
         
         tiltValue = newTiltValue;
     }
