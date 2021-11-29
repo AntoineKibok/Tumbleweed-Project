@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class TumbleController : MonoBehaviour
 {
@@ -56,9 +57,10 @@ public class TumbleController : MonoBehaviour
     
     private void checkDebug()
     {
-        if (Input.GetKey(KeyCode.N))
+        if (Input.GetKeyDown(KeyCode.N))
         {   
             showDebug = !showDebug;
+            debugText.gameObject.SetActive(showDebug);
         }
     }
 

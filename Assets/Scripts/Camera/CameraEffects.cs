@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using TMPro;
-
+using UnityEngine.UI;
 
 
 public class CameraEffects : MonoBehaviour
@@ -12,6 +12,8 @@ public class CameraEffects : MonoBehaviour
 
 {
     private CinemachineFreeLook cam;
+    public int percentActivation = 70;
+
 
     [Header("Camera tilt")]
     public bool applyTilt = true;
@@ -22,31 +24,21 @@ public class CameraEffects : MonoBehaviour
     [Header("Vitesse secoueuse")]
     public bool applyShake = true;
     private Rigidbody rbPlayer;
-    public int percentActivation = 70;
     private int speedLimit;
-    private float shakeStart, shakeFactor, currentSpeed;
+    public float shakeFactor = 1;
+    private float speedEffectStart, currentSpeed;
     
     [Header("Debug")]
     public bool showDebug;
     public TextMeshProUGUI debugText;
-    
+    public Slider debugSlider;
+
     private void checkDebug()
     {
         if (Input.GetKeyDown(KeyCode.B))
         {
-            
-            showDebug = !showDebug;
-
-            if (showDebug == true)
-            {
-                debugText.gameObject.SetActive(true);
-            }
-            
-            if (showDebug == false)
-            {
-                debugText.gameObject.SetActive(false);
-            }
-
+            showDebug = !showDebug; 
+            debugText.gameObject.SetActive(showDebug);
         }
     }
 
@@ -59,7 +51,7 @@ public class CameraEffects : MonoBehaviour
 
         if (applyShake)
         {
-            shakeStart = speedLimit * (percentActivation * 0.01f);
+            speedEffectStart = speedLimit * (percentActivation * 0.01f);
         }
     }
 
@@ -80,30 +72,33 @@ public class CameraEffects : MonoBehaviour
         cameraTilt = Mathf.Lerp(cameraTilt, newTiltValue, cameraTiltLerpSpeed);
         cam.m_Lens.Dutch = cameraTilt;
     }
-    
 
-    private void ApplyShake()
+    public float GetSpeedEffectIntensity()
     {
-
-        currentSpeed = rbPlayer.velocity.magnitude;
-
-        if (currentSpeed > shakeStart)
-        {
-            shakeFactor = ((currentSpeed - speedLimit ) / (shakeStart - speedLimit)) * -1 + 1 ;
-            Shake(shakeFactor);
+        currentSpeed = rbPlayer.velocity.magnitude; 
+        if (currentSpeed > speedEffectStart) 
+        { 
+            return (((currentSpeed - speedLimit) / (speedEffectStart - speedLimit)) * -shakeFactor + 1);
         }
-
         else
-        {
-            shakeFactor = 0;
-            Shake(0);
+        { 
+            return 0;
         }
         
+    }
+
+
+
+        private void ApplyShake()
+    {
+        
+        Shake(GetSpeedEffectIntensity());
         
         if (showDebug)
         {
-            debugText.text = "Current: " + currentSpeed + " / " + speedLimit +
-                             "\n" + "StartShake: " + shakeStart +
+            debugSlider.value = Mathf.Clamp01(currentSpeed/speedLimit);
+            debugText.text = "Current: " + currentSpeed + " / " + speedLimit + "   " +
+                             "\n" + "StartShake: " + speedEffectStart +
                              "\n" + "ShakeFactor: " + shakeFactor;
         }
         
@@ -114,9 +109,9 @@ public class CameraEffects : MonoBehaviour
         cam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = intensity;
         cam.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = intensity;
         
-        cam.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = intensity*1.5f;
-        cam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = intensity*1.5f;
-        cam.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = intensity*1.5f;
+        cam.GetRig(0).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = intensity;
+        cam.GetRig(1).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = intensity;
+        cam.GetRig(2).GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = intensity;
     }
 
 }
