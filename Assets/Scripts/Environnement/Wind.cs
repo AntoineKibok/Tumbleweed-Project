@@ -15,6 +15,7 @@ public class Wind : MonoBehaviour
         if (other.GetComponent<TumbleController>() != null)
         {
             other.GetComponent<Rigidbody>().AddForce(transform.up * windStrengh);
+
         }
     }
 

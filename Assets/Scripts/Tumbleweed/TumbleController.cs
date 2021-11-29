@@ -43,7 +43,6 @@ public class TumbleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        isBigColliding = GameObject.Find("BigCollider").GetComponent<BigColliderUtil>().isColliding;
         ApplyControl();
     }
 

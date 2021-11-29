@@ -16,9 +16,6 @@ public class CameraEffects : MonoBehaviour
     [Header("Camera tilt")]
     public bool applyTilt = true;
     public float tiltFactor = 3f;
-    public float smoothTimeTilt = 3f;
-    private float tiltValue = 0f;
-    private float tiltVelocity = 0.0f;
     public float cameraTilt;
     public float cameraTiltLerpSpeed = 0.02f;
     
@@ -80,15 +77,8 @@ public class CameraEffects : MonoBehaviour
     private void ApplyTilt()
     {
         float newTiltValue = (Input.GetAxis("Horizontal") * tiltFactor) * -1;
-        //float smoothTiltValue = Mathf.SmoothDamp(tiltValue, tiltFactor, ref tiltVelocity, smoothTimeTilt, 0.01f);
-
         cameraTilt = Mathf.Lerp(cameraTilt, newTiltValue, cameraTiltLerpSpeed);
-        
-        
-        
         cam.m_Lens.Dutch = cameraTilt;
-        
-        tiltValue = newTiltValue;
     }
     
 
