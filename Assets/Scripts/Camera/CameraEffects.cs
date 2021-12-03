@@ -5,7 +5,6 @@ using UnityEngine;
 using Cinemachine;
 using TMPro;
 using UnityEngine.UI;
-using XInputDotNetPure;
 
 
 public class CameraEffects : MonoBehaviour
@@ -92,8 +91,6 @@ public class CameraEffects : MonoBehaviour
 
         private void ApplyShake()
     {
-        Vibrations vibrations = GameObject.Find("GameManager").GetComponent<Vibrations>();
-        GamePad.SetVibration(vibrations.playerIndex,GetSpeedEffectIntensity()/12 ,GetSpeedEffectIntensity()/12);
         Shake(GetSpeedEffectIntensity());
         
         if (showDebug)
