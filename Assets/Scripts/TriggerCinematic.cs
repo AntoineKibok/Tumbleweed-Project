@@ -16,9 +16,13 @@ public class TriggerCinematic : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Entre dans la zone");
-        director.Play();
+        if (manager.canAnimationStart(step))
+        {
+            director.Play();
+        }
     }
 
+    //Quand l'animation est lancée
     void OnPlayableDirectorPlayed(PlayableDirector aDirector)
     {
         if (director == aDirector)
@@ -29,6 +33,7 @@ public class TriggerCinematic : MonoBehaviour
         }
     }
     
+    //Quand l'animation s'arrête
     void OnPlayableDirectorStopped(PlayableDirector aDirector)
     {
         if (director == aDirector)

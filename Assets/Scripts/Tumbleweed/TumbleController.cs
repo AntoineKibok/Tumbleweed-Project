@@ -29,7 +29,6 @@ public class TumbleController : MonoBehaviour
     {
         //Recupération du rigidbody.
         rb = gameObject.GetComponent<Rigidbody>();
-
         //debugText.gameObject.SetActive(showDebug);
     }
 
@@ -43,10 +42,15 @@ public class TumbleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(manager.canMove) 
+        if (manager.canMove)
+        {
             ApplyControl();
+        }
         else
-            rb.velocity = Vector3.zero;
+        { 
+            rb.velocity = rb.velocity/1.1f;
+        }
+
     }
 
     private void checkExit()

@@ -31,6 +31,22 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public bool canAnimationStart(string step)
+    {
+        switch (step)
+        {
+            case "saloon":
+                return !cinematicSaloon;
+                break;
+            
+            default:
+                return true;
+                break;
+        }
+
+        return true;
+    }
+
     // Update is called once per frame
     void Update()
     {
