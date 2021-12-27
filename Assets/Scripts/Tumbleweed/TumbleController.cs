@@ -1,20 +1,17 @@
 ﻿using UnityEngine;
 using TMPro;
-using UnityEngine.Serialization;
-using UnityEngine.UI;
 
 public class TumbleController : MonoBehaviour
 {
-    private Rigidbody rb;
+    public Rigidbody rb;
     public Transform camTransform;
     public bool isGrounded = true;
-    public bool isBigColliding = true;
+    public GameManager manager;
 
     [Header("Valeurs")]
     public int maxSpeed = 60;
     [SerializeField] private float speedFactor = 7;
     [SerializeField] private float jumpFactor = 2;
-    public bool flyingMode = false;
 
     [Header("Debug")]
     [SerializeField] private bool showDebug = false;
@@ -25,6 +22,8 @@ public class TumbleController : MonoBehaviour
     public float energyMax = 100;
     public float energyDrain = 1;
     public float enregisedJumpStrengh = 1;
+    public bool canMove = true;
+
 
     private void Start()
     {
@@ -44,7 +43,10 @@ public class TumbleController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyControl();
+        if(manager.canMove) 
+            ApplyControl();
+        else
+            rb.velocity = Vector3.zero;
     }
 
     private void checkExit()
@@ -135,21 +137,6 @@ public class TumbleController : MonoBehaviour
                 rb.AddForce(Vector3.up * enregisedJumpStrengh);
             }
         }
-
-        /*
-        if (flyingMode)
-        {
-            if (Input.GetAxis("Jump") != 0 && !isBigColliding)
-            {
-                rb.useGravity = false;
-
-            }
-            else
-            {
-                rb.useGravity = true;
-            }
-        }
-        */
         
     }
 
@@ -174,8 +161,7 @@ public class TumbleController : MonoBehaviour
         
         if (showDebug)
         {
-            debugText.text = "Big Collide:   " + isBigColliding + "\n" +
-                             "Petit Collide: "  + isGrounded;
+            debugText.text = "";
         }
 
     }
