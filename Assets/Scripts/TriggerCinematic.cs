@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Rendering;
 
 public class TriggerCinematic : MonoBehaviour
 {
@@ -11,7 +12,8 @@ public class TriggerCinematic : MonoBehaviour
     public TumbleController controller;
     public GameManager manager;
     public string step;
-
+    public Volume PlayVolume, CinematicVolume;
+    public GameObject highlight;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -30,6 +32,8 @@ public class TriggerCinematic : MonoBehaviour
             Debug.Log("Cinématique " + aDirector.name + " lancée.");
             manager.canMove = false;
             manager.cinematicSaloon = true;
+            PlayVolume.gameObject.SetActive(false);
+            CinematicVolume.gameObject.SetActive(true);
         }
     }
     
@@ -41,6 +45,9 @@ public class TriggerCinematic : MonoBehaviour
             Debug.Log("Cinématique " + aDirector.name + " terminée.");
             manager.canMove = true;
             manager.confirmStep(step);
+            CinematicVolume.gameObject.SetActive(false);
+            PlayVolume.gameObject.SetActive(true);
+            highlight.SetActive(false);
         }
     }
     
