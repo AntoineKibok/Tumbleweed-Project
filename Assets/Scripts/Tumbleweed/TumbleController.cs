@@ -121,8 +121,7 @@ public class TumbleController : MonoBehaviour
             rb.AddForce(Vector3.up * jumpFactor, ForceMode.Impulse);
             //JumpEffect(forwardDir);
         }
-
-
+        
         if (energy > 0)
         {
             if (Input.GetAxis("Jump") != 0)
@@ -145,7 +144,6 @@ public class TumbleController : MonoBehaviour
     
     private void Debug()
     {
-        
         if (showDebug)
         {
             debugText.text = "";
