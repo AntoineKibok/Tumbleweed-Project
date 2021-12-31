@@ -11,4 +11,5 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/TerrainExperimental.unity
     guid: aba3b78d8994e1c4ab0e4ab4763c08fe
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: c6309fe57f44d5e4895bd64dac7753a6, type: 2}

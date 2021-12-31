@@ -22,8 +22,6 @@ public class TumbleController : MonoBehaviour
     public float energyMax = 100;
     public float energyDrain = 1;
     public float enregisedJumpStrengh = 1;
-    public bool canMove = true;
-
 
     private void Start()
     {
@@ -35,7 +33,6 @@ public class TumbleController : MonoBehaviour
     private void Update()
     {
         Debug();
-        checkExit();
         checkDebug();
         GroundDetection();
     }
@@ -52,14 +49,7 @@ public class TumbleController : MonoBehaviour
         }
 
     }
-
-    private void checkExit()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
+    
     
     private void checkDebug()
     {
@@ -121,7 +111,7 @@ public class TumbleController : MonoBehaviour
     {
         if (Input.GetAxis("Jump") != 0 && isGrounded)
         {
-            //Ajoute un petit booste de vitesse
+            //Ajoute un petit boost de vitesse
             if (rb.velocity.magnitude > 0.3f)
             {
                 rb.AddForce(forwardDir * (jumpFactor/2), ForceMode.Impulse);
@@ -144,13 +134,6 @@ public class TumbleController : MonoBehaviour
         
     }
 
-    //Ne fonctionne pas encore, problèmes a cause de la rotation
-    public void JumpEffect(Vector3 forwardDir)
-    {
-        transform.localScale = new Vector3(transform.localScale.x,transform.localScale.y-0.01f,transform.localScale.x);
-
-    }
-    
     private void ClampSpeed()
     {
         if (rb.velocity.magnitude >= maxSpeed)
