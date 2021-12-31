@@ -13,7 +13,7 @@ public class CameraEffects : MonoBehaviour
 {
     private CinemachineFreeLook cam;
     [Range(0, 100)]
-    public int percentActivation = 60;
+    public int percentActivation = 20;
 
 
     [Header("Camera tilt")]
