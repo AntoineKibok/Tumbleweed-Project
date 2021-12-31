@@ -12,7 +12,8 @@ public class CameraEffects : MonoBehaviour
 
 {
     private CinemachineFreeLook cam;
-    public int percentActivation = 70;
+    [Range(0, 100)]
+    public int percentActivation = 60;
 
 
     [Header("Camera tilt")]
@@ -21,18 +22,51 @@ public class CameraEffects : MonoBehaviour
     public float cameraTilt;
     public float cameraTiltLerpSpeed = 0.02f;
     
-    [Header("Vitesse secoueuse")]
-    public bool applyShake = true;
     private Rigidbody rbPlayer;
     private int speedLimit;
-    public float shakeFactor = 1;
     private float speedEffectStart, currentSpeed;
     
+    [Header("Vitesse secoueuse")]
+    public bool applyShake = true;
+    public float shakeFactor = 1;
+    
+    [Header("Modification FOV")]
+    public bool applyFOV = true;
+    public float FOVInitial = 40;
+    [Range(40, 120)] 
+    public float FOVMax = 60;
+    public float FOVLerpSpeed = 1;
+
     [Header("Debug")]
     public bool showDebug;
     public TextMeshProUGUI debugText;
     public Slider debugSlider;
 
+
+    public void ApplyFOV()
+    {
+        float effectIntensity = GetSpeedEffectIntensity(tiltFactor);
+        float newFOV = 0, oldFOV = 0, lerpedFOV = 0;
+
+        if (currentSpeed > speedEffectStart)
+        {
+            oldFOV = cam.m_Lens.FieldOfView;
+            newFOV = Mathf.Lerp(FOVInitial, FOVMax, effectIntensity);
+            lerpedFOV = Mathf.Lerp(oldFOV, newFOV, FOVLerpSpeed);
+            
+            cam.m_Lens.FieldOfView = lerpedFOV;
+        }
+        
+        if (showDebug)
+        {
+            debugText.text = "Current: " + currentSpeed + " / " + speedLimit + "   " +
+                             "\n" + "Start: " + speedEffectStart +
+                             "\n" + oldFOV + " -- " + newFOV +" -- " + lerpedFOV;
+        }
+
+        
+    }
+    
     private void checkDebug()
     {
         if (Input.GetKeyDown(KeyCode.B))
@@ -49,7 +83,7 @@ public class CameraEffects : MonoBehaviour
         speedLimit = GameObject.FindWithTag("Player").GetComponent<TumbleController>().maxSpeed;
         rbPlayer = GameObject.FindWithTag("Player").GetComponent<Rigidbody>();
 
-        if (applyShake)
+        if (applyShake || applyFOV)
         {
             speedEffectStart = speedLimit * (percentActivation * 0.01f);
         }
@@ -62,6 +96,9 @@ public class CameraEffects : MonoBehaviour
         
         if (applyShake)
             ApplyShake();
+
+        if (applyFOV)
+            ApplyFOV();
         
         checkDebug();
     }
@@ -73,12 +110,12 @@ public class CameraEffects : MonoBehaviour
         cam.m_Lens.Dutch = cameraTilt;
     }
 
-    public float GetSpeedEffectIntensity()
+    public float GetSpeedEffectIntensity(float factor)
     {
         currentSpeed = rbPlayer.velocity.magnitude; 
         if (currentSpeed > speedEffectStart) 
         { 
-            return (((currentSpeed - speedLimit) / (speedEffectStart - speedLimit)) * -shakeFactor + 1);
+            return (((currentSpeed - speedLimit) / (speedEffectStart - speedLimit)) * -factor + 1);
         }
         else
         { 
@@ -91,7 +128,7 @@ public class CameraEffects : MonoBehaviour
 
         private void ApplyShake()
     {
-        Shake(GetSpeedEffectIntensity());
+        Shake(GetSpeedEffectIntensity(shakeFactor));
         
         if (showDebug)
         {
