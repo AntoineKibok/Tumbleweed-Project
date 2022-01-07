@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
@@ -9,33 +10,21 @@ public class IgnitePlayer : MonoBehaviour {
     public float timer;                 //Time left on timer, can be used at 0
     public float length = 60;
     public GameObject fire;
-    
+    public GameObject player;
+
+ 
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log(other.gameObject.tag);
 
-        if (other.gameObject.tag == "Fire")
+        if (other.gameObject.CompareTag("Player"))
         {
+            player = other.gameObject;
             Debug.Log("Faya baby");
             Ignite();
         }
     }
     
-    private void CollideDetection()
-    {
-        RaycastHit hit;
-        Vector3 p1 = transform.position;
-
-        // Cast a sphere wrapping character controller 10 meters forward
-        // to see if it is about to hit anything.
-        if (Physics.SphereCast(p1, 1, transform.forward, out hit, 10))
-        {
-            if (hit.transform.tag == "Fire")
-            {
-                Ignite();
-            }
-        }
-    }
 
     private void Ignite()
     {
@@ -43,10 +32,15 @@ public class IgnitePlayer : MonoBehaviour {
         fire.SetActive(true);
         timer = length;
         active = true;
+        player.GetComponent<Flamable>().inFlame = true;
+        player.GetComponent<Flamable>().PlayerPropagation();
+
     }
 
     private void Extinguish()
     {
+        player.GetComponent<Flamable>().inFlame = false;
+
         active = false;
         Debug.Log("Plus faya");
         fire.SetActive(false);
@@ -55,12 +49,12 @@ public class IgnitePlayer : MonoBehaviour {
     private void CorrectScale()
     {
         float scale = Mathf.InverseLerp(0, length, timer);
-        fire.transform.localScale = new Vector3(scale,scale,scale);
+        fire.transform.localScale = new Vector3(scale/2,scale/2,scale/2);
     }
     
     void Update () {
         
-        CollideDetection();
+        //CollideDetection();
         
         if (active)
         {

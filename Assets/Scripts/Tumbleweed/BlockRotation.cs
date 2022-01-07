@@ -3,9 +3,9 @@ using UnityEngine;
 public class BlockRotation : MonoBehaviour
 {
     
-    /*
-    private Rigidbody rb;
- 
+    
+    public Rigidbody rb;
+ /*
     private void Awake() {
         rb = GetComponentInParent<Rigidbody>();
     }
@@ -26,5 +26,13 @@ public class BlockRotation : MonoBehaviour
     private void FixedUpdate()
     {
         tr.position = target.position;
+
+        Vector3 dir = rb.velocity;
+        dir.y = 0;
+        
+        if (dir.magnitude != 0)
+        {
+            tr.LookAt(tr.position + dir);
+        }
     }
 }
