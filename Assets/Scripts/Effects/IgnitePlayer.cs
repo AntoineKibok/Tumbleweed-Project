@@ -15,12 +15,9 @@ public class IgnitePlayer : MonoBehaviour {
  
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.tag);
-
         if (other.gameObject.CompareTag("Player"))
         {
             player = other.gameObject;
-            Debug.Log("Faya baby");
             Ignite();
         }
     }
@@ -28,21 +25,17 @@ public class IgnitePlayer : MonoBehaviour {
 
     private void Ignite()
     {
-        Debug.Log("Faya");
         fire.SetActive(true);
         timer = length;
         active = true;
         player.GetComponent<Flamable>().inFlame = true;
         player.GetComponent<Flamable>().PlayerPropagation();
-
     }
 
     private void Extinguish()
     {
         player.GetComponent<Flamable>().inFlame = false;
-
         active = false;
-        Debug.Log("Plus faya");
         fire.SetActive(false);
     }
 

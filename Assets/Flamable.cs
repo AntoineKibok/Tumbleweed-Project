@@ -6,7 +6,7 @@ public class Flamable : MonoBehaviour
 {
     public bool inFlame;
     public GameObject firePrefab;
-    public GameObject fireInstance;
+    private GameObject fireInstance;
     public Vector3 decal;
     public float range = 3;
     public float propagateDelay = 3f;
@@ -23,7 +23,7 @@ public class Flamable : MonoBehaviour
         if (inFlame == false)
         {
             inFlame = true;
-            fireInstance = Instantiate(firePrefab, transform.position + decal, Quaternion.identity);
+            fireInstance = Instantiate(firePrefab, transform.position + decal, Quaternion.Euler(-90,0,0));
             StartCoroutine(Propagate());
         }
     }
