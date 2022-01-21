@@ -11,11 +11,17 @@ public class Flamable : MonoBehaviour
     public float range = 3;
     public float propagateDelay = 3f;
     
+    public float speed = 1.0f;
+    public Color startColor;
+    public Color endColor;
+    public bool repeatable = false;
+    float startTime;
+    
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        startTime = Time.time;
     }
 
     public void Ignite()
@@ -56,10 +62,21 @@ public class Flamable : MonoBehaviour
             StartCoroutine(Propagate());
         }
     }
-    
-    // Update is called once per frame
+
     void Update()
     {
-        
+        if (inFlame)
+        {
+            if (!repeatable)
+            {
+                float t = (Time.time - startTime) * speed;
+                GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, t);
+            }
+            else
+            {
+                float t = (Mathf.Sin(Time.time - startTime) * speed);
+                GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, t);
+            }
+        }
     }
 }
