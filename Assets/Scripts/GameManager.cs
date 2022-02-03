@@ -7,7 +7,9 @@ public class GameManager : MonoBehaviour
 {
 
     public bool canMove = true;
+    public bool cinematicIntro = false;
     public bool cinematicSaloon = false;
+
 
 
     // Start is called before the first frame update
@@ -20,11 +22,16 @@ public class GameManager : MonoBehaviour
     {
         switch (step)
         {
+            case "intro":
+                cinematicIntro = true;
+                Debug.Log(step + " confirmée.");
+                break;
+
             case "saloon":
                 cinematicSaloon = true;
                 Debug.Log(step + " confirmée.");
                 break;
-            
+
             default:
                 Debug.Log("Mauvaise entrée");
                 break;
@@ -35,10 +42,14 @@ public class GameManager : MonoBehaviour
     {
         switch (step)
         {
+            case "intro":
+                return !cinematicIntro;
+                break;
+
             case "saloon":
                 return !cinematicSaloon;
                 break;
-            
+
             default:
                 return true;
                 break;
@@ -46,7 +57,7 @@ public class GameManager : MonoBehaviour
 
         return true;
     }
-    
+
     private void checkExit()
     {
         if (Input.GetKey(KeyCode.Escape))
