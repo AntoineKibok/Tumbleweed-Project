@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public bool canMove = true;
     public bool cinematicIntro = false;
+    public bool cinematicArrival = false;
     public bool cinematicSaloon = false;
 
 
@@ -24,6 +25,11 @@ public class GameManager : MonoBehaviour
         {
             case "intro":
                 cinematicIntro = true;
+                Debug.Log(step + " confirmée.");
+                break;
+
+            case "arrival":
+                cinematicArrival = true;
                 Debug.Log(step + " confirmée.");
                 break;
 
@@ -44,6 +50,10 @@ public class GameManager : MonoBehaviour
         {
             case "intro":
                 return !cinematicIntro;
+                break;
+
+            case "arrival":
+                return !cinematicArrival;
                 break;
 
             case "saloon":
