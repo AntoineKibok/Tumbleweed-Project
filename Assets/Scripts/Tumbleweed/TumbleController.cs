@@ -7,6 +7,7 @@ public class TumbleController : MonoBehaviour
     public Transform camTransform;
     public bool isGrounded = true;
     public GameManager manager;
+    public SoundEffectTumble soundEffect;
 
     [Header("Valeurs")]
     public int maxSpeed = 60;
@@ -27,6 +28,7 @@ public class TumbleController : MonoBehaviour
     {
         //Recupération du rigidbody.
         rb = gameObject.GetComponent<Rigidbody>();
+        soundEffect = GetComponent<SoundEffectTumble>();
         //debugText.gameObject.SetActive(showDebug);
     }
 
@@ -68,6 +70,11 @@ public class TumbleController : MonoBehaviour
         if (Physics.Raycast(origin, dir, out hit, rayLenght))
         {
             UnityEngine.Debug.DrawRay(origin,dir * hit.distance, Color.green);
+            if (!isGrounded)
+            {
+                UnityEngine.Debug.Log("Touche le sol");
+                soundEffect.PlaySound();
+            }
             isGrounded = true;
             energy = energyMax;
         }
