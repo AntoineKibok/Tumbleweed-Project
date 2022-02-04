@@ -14,6 +14,7 @@ public class TriggerCinematic : MonoBehaviour
     public string step;
     public Volume PlayVolume, CinematicVolume;
     public GameObject highlight;
+    public bool manualStart = false;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -21,6 +22,17 @@ public class TriggerCinematic : MonoBehaviour
         if (manager.canAnimationStart(step))
         {
             director.Play();
+        }
+    }
+
+    private void Update()
+    {
+        if (manager.canAnimationStart(step))
+        {
+            if (manualStart)
+            {
+                director.Play();
+            }
         }
     }
 

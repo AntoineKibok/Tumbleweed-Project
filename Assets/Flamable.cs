@@ -1,34 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Flamable : MonoBehaviour
 {
     public bool inFlame;
+    public bool hasBeenInFlame = false;
+    public int lifetime = 15;
+    public int iterationFire = 0;
     public GameObject firePrefab;
     private GameObject fireInstance;
     public Vector3 decal;
     public float range = 3;
     public float propagateDelay = 3f;
-    
-    public float speed = 1.0f;
-    public Color startColor;
     public Color endColor;
-    public bool repeatable = false;
-    float startTime;
+    public FireCount count;
     
-    
-    // Start is called before the first frame update
-    void Start()
-    {
-        startTime = Time.time;
-    }
-
     public void Ignite()
     {
         if (inFlame == false)
         {
             inFlame = true;
+            count.AddFire();
             fireInstance = Instantiate(firePrefab, transform.position + decal, Quaternion.Euler(-90,0,0));
             StartCoroutine(Propagate());
         }
@@ -50,33 +42,40 @@ public class Flamable : MonoBehaviour
             {
                 if (hit.collider.gameObject.GetComponent<Flamable>().inFlame == false)
                 {
-                    hit.collider.gameObject.GetComponent<Flamable>().Ignite();
+                    if (hit.collider.gameObject.GetComponent<Flamable>().hasBeenInFlame == false)
+                    {
+                        hit.collider.gameObject.GetComponent<Flamable>().Ignite();
+                    }
                 }
             }
         }
 
         yield return new WaitForSeconds(propagateDelay);
-        
-        if (inFlame == true)
-        {
-            StartCoroutine(Propagate());
-        }
-    }
 
-    void Update()
-    {
-        if (inFlame)
+        iterationFire++;
+
+        if (iterationFire >= lifetime)
         {
-            if (!repeatable)
+            if (inFlame == true)
             {
-                float t = (Time.time - startTime) * speed;
-                GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, t);
-            }
-            else
-            {
-                float t = (Mathf.Sin(Time.time - startTime) * speed);
-                GetComponent<Renderer>().material.color = Color.Lerp(startColor, endColor, t);
+                StopFire();
             }
         }
+        else
+        {
+            if (inFlame == true)
+            {
+                StartCoroutine(Propagate());
+            }  
+        }
+
     }
+    
+    public void StopFire()
+    {
+        Destroy(fireInstance);
+        GetComponent<Renderer>().material.color = endColor;
+        hasBeenInFlame = true;
+    }
+    
 }
