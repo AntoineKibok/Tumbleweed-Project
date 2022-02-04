@@ -16,12 +16,12 @@ public class MainMenuManager : MonoBehaviour
         creditPanel.SetActive(false);
     }
 
-    public void startClic()
+    public void SoundClic()
     {
         clic.PlayOneShot(clic.clip);
     }
     
-    public void clicQuit()
+    public void QuitClic()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -32,7 +32,7 @@ public class MainMenuManager : MonoBehaviour
 #endif
     }
     
-    public void startGame(int sceneIndex)
+    public void StartGame(int sceneIndex)
     {
         SceneManager.LoadScene(sceneIndex,LoadSceneMode.Single);
     }

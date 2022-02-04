@@ -32,8 +32,17 @@ public class TriggerCinematic : MonoBehaviour
             Debug.Log("Cinématique " + aDirector.name + " lancée.");
             manager.canMove = false;
             manager.cinematicSaloon = true;
-            PlayVolume.gameObject.SetActive(false);
-            CinematicVolume.gameObject.SetActive(true);
+
+            if (PlayVolume != null)
+            {
+                PlayVolume.gameObject.SetActive(false);
+
+            }
+            if (CinematicVolume != null)
+            {
+                CinematicVolume.gameObject.SetActive(true);
+            }
+
         }
     }
     
@@ -45,8 +54,16 @@ public class TriggerCinematic : MonoBehaviour
             Debug.Log("Cinématique " + aDirector.name + " terminée.");
             manager.canMove = true;
             manager.confirmStep(step);
-            CinematicVolume.gameObject.SetActive(false);
-            PlayVolume.gameObject.SetActive(true);
+            if (CinematicVolume != null)
+            {
+                CinematicVolume.gameObject.SetActive(false);
+            }
+
+            if (PlayVolume != null)
+            {
+                PlayVolume.gameObject.SetActive(true);
+
+            }
             highlight.SetActive(false);
         }
     }

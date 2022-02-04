@@ -7,9 +7,9 @@ public class CoinsStar : MonoBehaviour
 
     void OnCollisionEnter(Collider other)
     {
-        //tu peux tester de différentes manieres
+        //tu peux tester de diffÃ©rentes manieres
 
-        // 1- Soit l'objet avec lequel la collision s'effectue est taggé, dans ce cas tu peux utiliser son tag comme condition :
+        // 1- Soit l'objet avec lequel la collision s'effectue est taggÃ©, dans ce cas tu peux utiliser son tag comme condition :
         if (other.gameObject.tag == "Coins")
         {
             Destroy(gameObject); // attention: gameObject et pas GameObject

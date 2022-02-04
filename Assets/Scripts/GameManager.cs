@@ -68,17 +68,9 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    private void checkExit()
-    {
-        if (Input.GetKey(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-    }
 
     // Update is called once per frame
     void Update()
     {
-        checkExit();
     }
 }
