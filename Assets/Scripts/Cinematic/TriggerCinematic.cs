@@ -27,11 +27,14 @@ public class TriggerCinematic : MonoBehaviour
 
     private void Update()
     {
-        if (manager.canAnimationStart(step))
+        if (step == "brunt")
         {
-            if (manualStart)
+            if (manager.canAnimationStart(step))
             {
-                director.Play();
+                if (manualStart)
+                {
+                    director.Play();
+                }
             }
         }
     }

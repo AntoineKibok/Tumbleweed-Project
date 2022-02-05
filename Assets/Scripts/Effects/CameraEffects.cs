@@ -39,11 +39,7 @@ public class CameraEffects : MonoBehaviour
     public float FOVMax = 60;
     public float FOVLerpSpeed = 0.01f;
     public float FOVFactor;
-
-    [Header("Debug")]
-    public bool showDebug;
-    public TextMeshProUGUI debugText;
-    public Slider debugSlider;
+    
 
 
     private void ApplyFOV()
@@ -59,24 +55,7 @@ public class CameraEffects : MonoBehaviour
             
             cam.m_Lens.FieldOfView = lerpedFOV;
         }
-        
-        if (showDebug)
-        {
-            debugText.text = "Current: " + currentSpeed + " / " + speedLimit + "   " +
-                             "\n" + "Start: " + speedEffectStart +
-                             "\n" + oldFOV + " -- " + newFOV +" -- " + lerpedFOV;
-        }
 
-        
-    }
-    
-    private void checkDebug()
-    {
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            showDebug = !showDebug; 
-            debugText.gameObject.SetActive(showDebug);
-        }
     }
 
     void Start()
@@ -105,8 +84,6 @@ public class CameraEffects : MonoBehaviour
             if (applyFOV)
                 ApplyFOV();
         }
-        
-        checkDebug();
     }
 
     private void ApplyTilt()
@@ -135,15 +112,7 @@ public class CameraEffects : MonoBehaviour
         private void ApplyShake()
     {
         Shake(GetSpeedEffectIntensity(shakeFactor));
-        
-        if (showDebug)
-        {
-            debugSlider.value = Mathf.Clamp01(currentSpeed/speedLimit);
-            debugText.text = "Current: " + currentSpeed + " / " + speedLimit + "   " +
-                             "\n" + "StartShake: " + speedEffectStart +
-                             "\n" + "ShakeFactor: " + shakeFactor;
-        }
-        
+
     }
     public void Shake(float intensity)
     {

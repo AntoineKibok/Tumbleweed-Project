@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public bool cinematicIntro = false;
     public bool cinematicArrival = false;
     public bool cinematicSaloon = false;
+    public bool cinematicBurnt = false;
+    public bool cinematicHorse = false;
+    public bool cinematicDuel = false;
 
 
 
@@ -37,6 +40,22 @@ public class GameManager : MonoBehaviour
                 cinematicSaloon = true;
                 Debug.Log(step + " confirmée.");
                 break;
+            
+            case "burnt":
+                cinematicBurnt = true;
+                Debug.Log(step + " confirmée.");
+                break;
+            
+            case "horses":
+                cinematicHorse = true;
+                Debug.Log(step + " confirmée.");
+                break;
+            
+            case "duel":
+                cinematicDuel = true;
+                Debug.Log(step + " confirmée.");
+                break;
+
 
             default:
                 Debug.Log("Mauvaise entrée");
@@ -50,22 +69,60 @@ public class GameManager : MonoBehaviour
         {
             case "intro":
                 return !cinematicIntro;
-                break;
 
             case "arrival":
-                return !cinematicArrival;
-                break;
+                if (cinematicIntro)
+                {
+                    return !cinematicArrival;
+                }
+                else
+                {
+                    return false;
+                }
 
             case "saloon":
-                return !cinematicSaloon;
-                break;
+                if (cinematicArrival)
+                {
+                    return !cinematicSaloon;
+                }
+                else
+                {
+                    return false;
+                }
+            
+            case "burnt":
+                if (cinematicSaloon)
+                {
+                    return !cinematicBurnt;
+                }
+                else
+                {
+                    return false;
+                }
+            
+            case "horses":
+                if (cinematicSaloon)
+                {
+                    return !cinematicHorse;
+                }
+                else
+                {
+                    return false;
+                }
+            
+            case "duel":
+                if (cinematicHorse && cinematicBurnt)
+                {
+                    return !cinematicHorse;
+                }
+                else
+                {
+                    return false;
+                }
 
             default:
                 return true;
-                break;
         }
-
-        return true;
     }
 
 

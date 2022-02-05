@@ -13,10 +13,7 @@ public class TumbleController : MonoBehaviour
     public int maxSpeed = 60;
     [SerializeField] private float speedFactor = 7;
     [SerializeField] private float jumpFactor = 2;
-
-    [Header("Debug")]
-    [SerializeField] private bool showDebug = false;
-    public TextMeshProUGUI debugText;
+    
 
     public float rayLenght = 1;
     public float energy = 0;
@@ -34,8 +31,6 @@ public class TumbleController : MonoBehaviour
 
     private void Update()
     {
-        Debug();
-        checkDebug();
         GroundDetection();
     }
 
@@ -52,15 +47,6 @@ public class TumbleController : MonoBehaviour
 
     }
     
-    
-    private void checkDebug()
-    {
-        if (Input.GetKeyDown(KeyCode.N))
-        {   
-            showDebug = !showDebug;
-            debugText.gameObject.SetActive(showDebug);
-        }
-    }
 
     private void GroundDetection()
     {
@@ -148,12 +134,4 @@ public class TumbleController : MonoBehaviour
         }
     }
     
-    private void Debug()
-    {
-        if (showDebug)
-        {
-            debugText.text = "";
-        }
-
-    }
 }
