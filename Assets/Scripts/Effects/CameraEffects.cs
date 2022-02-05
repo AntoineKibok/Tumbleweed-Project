@@ -25,6 +25,8 @@ public class CameraEffects : MonoBehaviour
     private Rigidbody rbPlayer;
     private int speedLimit;
     private float speedEffectStart, currentSpeed;
+
+    public GameManager manager;
     
     [Header("Vitesse secoueuse")]
     public bool applyShake = true;
@@ -92,14 +94,17 @@ public class CameraEffects : MonoBehaviour
 
     private void Update()
     {
-        if (applyTilt) 
-            ApplyTilt();
+        if (manager.canMove)
+        {
+            if (applyTilt) 
+                ApplyTilt();
         
-        if (applyShake)
-            ApplyShake();
+            if (applyShake)
+                ApplyShake();
 
-        if (applyFOV)
-            ApplyFOV();
+            if (applyFOV)
+                ApplyFOV();
+        }
         
         checkDebug();
     }
