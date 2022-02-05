@@ -23,7 +23,8 @@ public class PauseMenuManager : MonoBehaviour
     {
         pauseCam.gameObject.SetActive(true);
         yield return new WaitForSeconds(2);
-        
+        Cursor.visible = true;
+
         panel.SetActive(true);
         playVolume.gameObject.SetActive(false);
         cinematicVolume.gameObject.SetActive(true);
@@ -38,6 +39,7 @@ public class PauseMenuManager : MonoBehaviour
     
     public void HideMenu()
     {
+        Cursor.visible = false;
         pauseCam.gameObject.SetActive(false);
         panel.SetActive(false);
         playVolume.gameObject.SetActive(true);
