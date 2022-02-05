@@ -27,7 +27,7 @@ public class TriggerCinematic : MonoBehaviour
 
     private void Update()
     {
-        if (step == "brunt")
+        if (step == "burnt")
         {
             if (manager.canAnimationStart(step))
             {
