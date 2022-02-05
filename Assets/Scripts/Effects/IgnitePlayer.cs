@@ -17,6 +17,7 @@ public class IgnitePlayer : MonoBehaviour {
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            Debug.Log("Cc1");
             player = other.gameObject;
             Ignite();
         }

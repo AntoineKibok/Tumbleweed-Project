@@ -26,12 +26,10 @@ public class SoundEffectTumble : MonoBehaviour
         int trackNum = Random.Range(0, audioClips.Count);
         audioSource.pitch = Random.Range(pitchRange.x, pitchRange.y);
         audioSource.PlayOneShot(audioClips[trackNum]);
-        Debug.Log("Son lancé :" + audioClips[trackNum].name);
     }
 
     public void StopPlay()
     {
-        Debug.Log("Son arrêté");
         audioSource.Stop();
     }
 }

@@ -72,7 +72,6 @@ public class TumbleController : MonoBehaviour
             UnityEngine.Debug.DrawRay(origin,dir * hit.distance, Color.green);
             if (!isGrounded)
             {
-                UnityEngine.Debug.Log("Touche le sol");
                 soundEffect.PlaySound();
             }
             isGrounded = true;

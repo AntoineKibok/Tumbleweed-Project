@@ -43,12 +43,10 @@ public class SoundAmbiant : MonoBehaviour
     {
         int trackNum = Random.Range(0, audioClips.Count);
         audioSource.PlayOneShot(audioClips[trackNum]);
-        Debug.Log("Son lancé :" + audioClips[trackNum].name);
     }
 
     public void StopPlay()
     {
-        Debug.Log("Son arrêté");
         audioSource.Stop();
     }
 }

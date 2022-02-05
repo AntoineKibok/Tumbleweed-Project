@@ -17,8 +17,11 @@ public class Flamable : MonoBehaviour
     
     public void Ignite()
     {
+        Debug.Log("Cc2");
+
         if (inFlame == false)
         {
+            Debug.Log("Cc3");
             inFlame = true;
             count.AddFire();
             fireInstance = Instantiate(firePrefab, transform.position + decal, Quaternion.Euler(-90,0,0));
