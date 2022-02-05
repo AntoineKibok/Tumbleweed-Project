@@ -14,14 +14,13 @@ public class Flamable : MonoBehaviour
     public float propagateDelay = 3f;
     public Color endColor;
     public FireCount count;
+    public bool ignoreLifetime = false;
     
     public void Ignite()
     {
-        Debug.Log("Cc2");
 
         if (inFlame == false)
         {
-            Debug.Log("Cc3");
             inFlame = true;
             count.AddFire();
             fireInstance = Instantiate(firePrefab, transform.position + decal, Quaternion.Euler(-90,0,0));
@@ -55,7 +54,10 @@ public class Flamable : MonoBehaviour
 
         yield return new WaitForSeconds(propagateDelay);
 
-        iterationFire++;
+        if (ignoreLifetime == false)
+        {
+            iterationFire++;
+        }
 
         if (iterationFire >= lifetime)
         {

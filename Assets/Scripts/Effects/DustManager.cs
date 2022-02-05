@@ -16,15 +16,14 @@ public class DustManager : MonoBehaviour
     {
         if (Controller.isGrounded == false)
         {
-            if(ps.isPaused == false)
+            if (ps.isPlaying)
             {
-                ps.Pause();
-                ps.Clear();
+                ps.Stop();
             }
         }
         else
         {
-            if (ps.isPaused)
+            if (ps.isStopped)
             {
                 ps.Play();
             }
