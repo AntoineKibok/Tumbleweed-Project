@@ -1325,6 +1325,7 @@ GameObject:
   - component: {fileID: 1488806913}
   - component: {fileID: 1488806912}
   - component: {fileID: 1488806911}
+  - component: {fileID: 1488806914}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1348,7 +1349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0004272461, y: -0.000061035156}
+  m_AnchoredPosition: {x: 0.0004272461, y: 0.0008239746}
   m_SizeDelta: {x: -34.78753, y: -31.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488806911
@@ -1433,7 +1434,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 4
+  m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -1506,6 +1507,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &1488806914
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1488806909}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: af304d00615d53b43acb04ebe34e801c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1566004273
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,7 +2118,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 400563653}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99992466
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
