@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
             case "duel":
                 if (cinematicHorse && cinematicBurnt)
                 {
-                    return !cinematicHorse;
+                    return !cinematicDuel;
                 }
                 else
                 {
