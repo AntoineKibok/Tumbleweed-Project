@@ -1348,7 +1348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.0004272461, y: 0.000061035156}
+  m_AnchoredPosition: {x: 0.0004272461, y: -0.000061035156}
   m_SizeDelta: {x: -34.78753, y: -31.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1488806911
@@ -1371,7 +1371,24 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: dffefefefe
+  m_text: "THE TUMBLEWEED TALES\r\n\r\n~~~ EQUIPE ~~~ \r\n\r\nAntoine Klein\r\nVictor
+    Meunier\r\nGuillaume Cintas\r\nJ\xE9r\xE9my Valade\r\n\r\n~~~ ASSETS UTILIS\xC9S
+    ~~~ \r\n\r\n~~ Graphiques ~~ \r\n\r\nTumbleweed \r\n\tby biggreenorange\r\n\r\nPOLYDesert\r\n\tby
+    Runemark Studio\r\n\r\nWestern Pack\r\n\tby dqurp\r\n\r\nLow Poly Cowboy\r\n\tby
+    MalberS Animations\r\n\r\nLow Poly Horse 3D Model\r\n\tby CadNav\n\r\n\r~~ Musiques
+    ~~\r\n\r\nFun in a Bottle\r\n\tby Kevin MacLeod\r\n\r\nMaster of the Feast \r\n\tby
+    Kevin MacLeod\r\n\r\nAltered Funk\r\n\tby jonahb\r\n\r\nCountry Fiddle wave\r\n\tby
+    ZakharValaha\r\n\r\nCountry Swing (With Harmonica)\r\n\tby Caffeine Creek Band\r\n\r\ndesert\r\n\tby
+    Jacob Field\r\n\r\nFolk Inn About \r\n\tby NaturesEye\r\n\r\nMexico guitars country
+    music\r\n\tby Andrewfai\r\n\r\nModern Spanish Pop Rumba - Pop Cello and Flamenco
+    Guitar\r\n\tby JuliusH\r\n\r\nThe Wild Rover - Traditional Irish Folk Music\r\n\tby
+    JuliusH\r\n\r\nFlamenco Guitar Duo - Flamenco - Spanish Guitar Music\r\n\tby
+    JuliusH\r\n\r\nYoung Forever - indie folk\r\n\tby ohhgeeeznotagain \r\n\n~~ Effets
+    sonores et ambiances ~~  \r\n\r\nLibres de droits, les sons proviennent des archives
+    audio de la GDC. \n\r\n~~~ REMERCIEMENTS ~~~ \r \r\n\r\nAntoine Lefevre, pour
+    sa composition inspir\xE9e de la \"Weed Burning Scene\" de Far Cry 3.\r\n\r\nNos
+    beta-testeurs pour leurs pr\xE9cieux retours. \r\n\r\nM. Mancini, pour son aide
+    essentielle au d\xE9veloppement de ce jeu !"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1405,7 +1422,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1416,7 +1433,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 4
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -2081,7 +2098,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 400563653}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99956834
+  m_Size: 0.99992466
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
