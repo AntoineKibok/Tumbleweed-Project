@@ -46,7 +46,6 @@ public class TriggerCinematic : MonoBehaviour
         {
             Debug.Log("Cinématique " + aDirector.name + " lancée.");
             manager.canMove = false;
-            manager.cinematicSaloon = true;
 
             if (PlayVolume != null)
             {
